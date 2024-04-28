@@ -15,9 +15,9 @@
     nixosConfigurations = {
       ai = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = inputs // {myvars.username = "ryan";};
+        specialArgs = inputs // {myvars.username = "qix";myvars.userfullname = "qixyuan";};
         modules = [
-          {networking.hostName = "ai";}
+          {networking.hostName = "qixNix";}
 
           ./configuration.nix
 
