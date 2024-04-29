@@ -25,7 +25,7 @@
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-intel"]; # kvm virtualization support
   boot.extraModprobeConfig = "options kvm_intel nested=1"; # for intel cpu
-  boot.kernelParams = ["nvidia.NVreg_PreserveVideoMemoryAllocations=1"];
+  boot.kernelParams = ["nvidia.NVreg_PreserveVideoMemoryAllocations=1" "ibt=off" "acpi_backlight=native"];
   boot.extraModulePackages = [];
   # clear /tmp on boot to get a stateless /tmp directory.
   boot.tmp.cleanOnBoot = true;
@@ -40,30 +40,10 @@
     "ntfs"
     "fat"
     "vfat"
-  ];
-
-  boot.initrd = {
-    # unlocked luks devices via a keyfile or prompt a passphrase.
-    luks.devices."encrypted-nixos" = {
-      # NOTE: DO NOT use device name here(like /dev/sda, /dev/nvme0n1p2, etc), use UUID instead.
-      # https://github.com/ryan4yin/nix-config/issues/43
-      device = "/dev/disk/by-uuid/bf8abbf0-fbd8-44f9-8d95-c4c6ccde1ec5";
-      # the keyfile(or device partition) that should be used as the decryption key for the encrypted device.
-      # if not specified, you will be prompted for a passphrase instead.
-      #keyFile = "/root-part.key";
-
-      # whether to allow TRIM requests to the underlying device.
-      # it's less secure, but faster.
-      allowDiscards = true;
-      # Whether to bypass dm-crypt’s internal read and write workqueues.
-      # Enabling this should improve performance on SSDs;
-      # https://wiki.archlinux.org/index.php/Dm-crypt/Specialties#Disable_workqueue_for_increased_solid_state_drive_(SSD)_performance
-      bypassWorkqueues = true;
-    };
-  };
+  ]
 
   fileSystems."/btr_pool" = {
-    device = "/dev/disk/by-uuid/69cdb635-b0d7-44b2-b9ef-12ed0e5087b3";
+    device = "/dev/disk/by-uuid/fcfa7182-25c4-45b3-abee-22a15031a68c";
     fsType = "btrfs";
     # btrfs's top-level subvolume, internally has an id 5
     # we can access all other subvolumes from this subvolume.
@@ -80,20 +60,20 @@
   };
 
   fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/69cdb635-b0d7-44b2-b9ef-12ed0e5087b3";
+    device = "/dev/disk/by-uuid/fcfa7182-25c4-45b3-abee-22a15031a68c";
     fsType = "btrfs";
     options = ["subvol=@nix" "noatime" "compress-force=zstd:1"];
   };
 
   # for guix store, which use `/gnu/store` as its store directory.
   fileSystems."/gnu" = {
-    device = "/dev/disk/by-uuid/69cdb635-b0d7-44b2-b9ef-12ed0e5087b3";
+    device = "/dev/disk/by-uuid/fcfa7182-25c4-45b3-abee-22a15031a68c";
     fsType = "btrfs";
     options = ["subvol=@guix" "noatime" "compress-force=zstd:1"];
   };
 
   fileSystems."/persistent" = {
-    device = "/dev/disk/by-uuid/69cdb635-b0d7-44b2-b9ef-12ed0e5087b3";
+    device = "/dev/disk/by-uuid/fcfa7182-25c4-45b3-abee-22a15031a68c";
     fsType = "btrfs";
     options = ["subvol=@persistent" "compress-force=zstd:1"];
     # impermanence's data is required for booting.
@@ -101,20 +81,20 @@
   };
 
   fileSystems."/snapshots" = {
-    device = "/dev/disk/by-uuid/69cdb635-b0d7-44b2-b9ef-12ed0e5087b3";
+    device = "/dev/disk/by-uuid/fcfa7182-25c4-45b3-abee-22a15031a68c";
     fsType = "btrfs";
     options = ["subvol=@snapshots" "compress-force=zstd:1"];
   };
 
   fileSystems."/tmp" = {
-    device = "/dev/disk/by-uuid/69cdb635-b0d7-44b2-b9ef-12ed0e5087b3";
+    device = "/dev/disk/by-uuid/fcfa7182-25c4-45b3-abee-22a15031a68c";
     fsType = "btrfs";
     options = ["subvol=@tmp" "compress-force=zstd:1"];
   };
 
   # mount swap subvolume in readonly mode.
   fileSystems."/swap" = {
-    device = "/dev/disk/by-uuid/69cdb635-b0d7-44b2-b9ef-12ed0e5087b3";
+    device = "/dev/disk/by-uuid/fcfa7182-25c4-45b3-abee-22a15031a68c";
     fsType = "btrfs";
     options = ["subvol=@swap" "ro"];
   };
@@ -130,7 +110,7 @@
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/98A0-09C3";
+    device = "/dev/disk/by-uuid/5AFE-4E96";
     fsType = "vfat";
   };
 
