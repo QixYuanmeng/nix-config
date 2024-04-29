@@ -5,11 +5,13 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     impermanence.url = "github:nix-community/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nuenv.url = "github:DeterminateSystems/nuenv";
   };
 
   outputs = inputs @ {
     nixpkgs,
     nixos-hardware,
+    nuenv,
     ...
   }: {
     nixosConfigurations = {
