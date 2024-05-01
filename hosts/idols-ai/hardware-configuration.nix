@@ -43,7 +43,7 @@
   ];
 
   fileSystems."/btr_pool" = {
-    device = "/dev/disk/by-uuid/fcfa7182-25c4-45b3-abee-22a15031a68c";
+    device = "/dev/disk/by-uuid/c2ad6f90-35ab-4341-9a7e-ced3ec856c1b";
     fsType = "btrfs";
     # btrfs's top-level subvolume, internally has an id 5
     # we can access all other subvolumes from this subvolume.
@@ -60,20 +60,20 @@
   };
 
   fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/fcfa7182-25c4-45b3-abee-22a15031a68c";
+    device = "/dev/disk/by-uuid/c2ad6f90-35ab-4341-9a7e-ced3ec856c1b";
     fsType = "btrfs";
     options = ["subvol=@nix" "noatime" "compress-force=zstd:1"];
   };
 
   # for guix store, which use `/gnu/store` as its store directory.
   fileSystems."/gnu" = {
-    device = "/dev/disk/by-uuid/fcfa7182-25c4-45b3-abee-22a15031a68c";
+    device = "/dev/disk/by-uuid/c2ad6f90-35ab-4341-9a7e-ced3ec856c1b";
     fsType = "btrfs";
     options = ["subvol=@guix" "noatime" "compress-force=zstd:1"];
   };
 
   fileSystems."/persistent" = {
-    device = "/dev/disk/by-uuid/fcfa7182-25c4-45b3-abee-22a15031a68c";
+    device = "/dev/disk/by-uuid/c2ad6f90-35ab-4341-9a7e-ced3ec856c1b";
     fsType = "btrfs";
     options = ["subvol=@persistent" "compress-force=zstd:1"];
     # impermanence's data is required for booting.
@@ -81,20 +81,20 @@
   };
 
   fileSystems."/snapshots" = {
-    device = "/dev/disk/by-uuid/fcfa7182-25c4-45b3-abee-22a15031a68c";
+    device = "/dev/disk/by-uuid/c2ad6f90-35ab-4341-9a7e-ced3ec856c1b";
     fsType = "btrfs";
     options = ["subvol=@snapshots" "compress-force=zstd:1"];
   };
 
   fileSystems."/tmp" = {
-    device = "/dev/disk/by-uuid/fcfa7182-25c4-45b3-abee-22a15031a68c";
+    device = "/dev/disk/by-uuid/c2ad6f90-35ab-4341-9a7e-ced3ec856c1b";
     fsType = "btrfs";
     options = ["subvol=@tmp" "compress-force=zstd:1"];
   };
 
   # mount swap subvolume in readonly mode.
   fileSystems."/swap" = {
-    device = "/dev/disk/by-uuid/fcfa7182-25c4-45b3-abee-22a15031a68c";
+    device = "/dev/disk/by-uuid/c2ad6f90-35ab-4341-9a7e-ced3ec856c1b";
     fsType = "btrfs";
     options = ["subvol=@swap" "ro"];
   };
@@ -110,7 +110,7 @@
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/5AFE-4E96";
+    device = "/dev/disk/by-uuid/06A2-EF34";
     fsType = "vfat";
   };
 

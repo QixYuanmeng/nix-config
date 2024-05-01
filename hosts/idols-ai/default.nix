@@ -5,7 +5,7 @@
 #
 #############################################################
 let
-  hostName = "qixNix"; # Define your hostname.
+  hostName = "ai"; # Define your hostname.
 in {
   imports = [
     ./netdev-mount.nix
