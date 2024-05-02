@@ -7,6 +7,7 @@
 }: let
   package = hyprland.packages.${pkgs.system}.hyprland;
 in {
+
   # NOTE:
   # We have to enable hyprland/i3's systemd user service in home-manager,
   # so that gammastep/wallpaper-switcher's user service can be start correctly!
@@ -62,6 +63,11 @@ in {
     # music player - mpd
     "mpd" = {
       source = ../conf/mpd;
+      recursive = true;
+    };
+
+    "rofi" = {
+      source = ../conf/rofi;
       recursive = true;
     };
   };
