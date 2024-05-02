@@ -27,6 +27,7 @@
     mpc-cli # command-line mpd client
     ncmpcpp # a mpd client with a UI
     networkmanagerapplet # provide GUI app: nm-connection-editor
-    rofi
+    brightnessctl
+    rofi-wayland
   ];
 }
