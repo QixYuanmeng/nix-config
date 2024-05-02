@@ -1,8 +1,8 @@
 {lib}: rec {
-  mainGateway = "192.168.5.1"; # main router
+  mainGateway = "192.168.2.1"; # main router
   # use suzi as the default gateway
   # it's a subrouter with a transparent proxy
-  defaultGateway = "192.168.5.178";
+  defaultGateway = "192.168.2.1";
   nameservers = [
     "119.29.29.29" # DNSPod
     "223.5.5.5" # AliDNS
@@ -29,11 +29,11 @@
     # ============================================
     # Other VMs and Physical Machines
     # ============================================
-    ai = {
-      # Desktop PC
-      iface = "enp5s0";
-      ipv4 = "192.168.5.100";
-    };
+    #ai = {
+    #  # Desktop PC
+    #  iface = "enp43s0";
+    #  ipv4 = "192.168.2.100";
+    #};
     aquamarine = {
       # VM
       iface = "enp2s0";

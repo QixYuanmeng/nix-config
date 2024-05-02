@@ -8,7 +8,8 @@
         #   auto:         position automatically
         #   1.5:          scale to 1.5 times
         #   bitdepth,10:  enable 10 bit support
-        monitor = "DP-2,highres,auto,1.5,bitdepth,10";
+        # :monitor = "eDP-1,2560x1440@165,auto,1";
+        monitor = "DP-1,2560x1440@170,auto,1,bitdepth,10";
       };
     };
     i3.nvidia = true;
@@ -21,7 +22,7 @@
     enable = true;
     extraConfig = ''
       Host github.com
-          IdentityFile ~/.ssh/idols-ai
+          IdentityFile ~/.ssh/id_rsa
           # Specifies that ssh should only use the identity file explicitly configured above
           # required to prevent sending default identity files first.
           IdentitiesOnly yes

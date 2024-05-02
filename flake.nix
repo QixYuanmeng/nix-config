@@ -101,10 +101,10 @@
     };
 
     # add git hooks to format nix code before commit
-    pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # pre-commit-hooks = {
+    #   url = "github:cachix/pre-commit-hooks.nix";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     nuenv.url = "github:DeterminateSystems/nuenv";
 
@@ -139,7 +139,7 @@
     # my private secrets, it's a private repository, you need to replace it with your own.
     # use ssh protocol to authenticate via ssh-agent/ssh-key, and shallow clone to save time
     mysecrets = {
-      url = "git+ssh://git@github.com/ryan4yin/nix-secrets.git?shallow=1";
+      url = "git+ssh://git@github.com/QixYuanmeng/nix-secrets.git?shallow=1";
       flake = false;
     };
 

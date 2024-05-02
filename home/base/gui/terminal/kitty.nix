@@ -36,6 +36,7 @@
     };
 
     settings = {
+      confirm_os_window_close = 0;
       background_opacity = "0.93";
       macos_option_as_alt = true; # Option key acts as Alt on macOS
       enable_audio_bell = false;
