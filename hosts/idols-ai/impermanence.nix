@@ -101,9 +101,11 @@
         # remote desktop
         ".config/remmina"
         ".config/freerdp"
-
+        ".config/JetBrains"
+        ".config/Thunar"
         # doom-emacs
         ".config/emacs"
+        ".config/yesplaymusic"
         "org" #  org files
 
         # vscode

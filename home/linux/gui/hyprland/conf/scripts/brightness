@@ -7,7 +7,7 @@ iDIR="$HOME/.config/hypr/mako/icons"
 # Get brightness
 get_backlight() {
 	LIGHT=$(printf "%.0f\n" $(brightnessctl -d intel_backlight g))
-	echo "${LIGHT / 19200 }%"
+	echo "$({LIGHT} / 19200)%"
 }
 
 # Get icons

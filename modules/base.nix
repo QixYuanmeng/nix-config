@@ -73,10 +73,9 @@
     #    2. Never leave the device and never sent over the network.
     # 2. Or just use hardware security keys like Yubikey/CanoKey.
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIKlN+Q/GxvwxDX/OAjJHaNFEznEN4Tw4E4TwqQu/eD6 ryan@idols-ai"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPoa9uEI/gR5+klqTQwvCgD6CD5vT5iD9YCNx2xNrH3B ryan@fern"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPwZ9MdotnyhxIJrI4gmVshExHiZOx+FGFhcW7BaYkfR ryan@harmonica"
-    ];
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOalZp2AFpgZjx/V/tFqtf1HKojM5vdtRkO567+ReQXG root@qixNix"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAZqsJZ7tXTvmG0HTx9U15oxmNS+gNskXQNEIvK3xGBA qix@qix-nix"
+      ];
   };
 
   nix.settings = {
