@@ -9,7 +9,7 @@
   # for power management
   services = {
     power-profiles-daemon = {
-      enable = true;
+      enable = false;
     };
     upower.enable = true;
   };

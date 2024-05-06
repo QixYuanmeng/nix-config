@@ -7,7 +7,11 @@
   pkgs,
   modulesPath,
   ...
-}: {
+}: 
+  let
+    myuvcvideo = pkgs.callPackage ./uvc.nix { kernel = config.boot.kernelPackages.kernel; };
+  in
+  {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
@@ -20,16 +24,16 @@
 
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
-
   boot.initrd.availableKernelModules = ["xhci_pci" "vmd" "thunderbolt" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod"];
-  boot.initrd.kernelModules = [];
+  boot.initrd.kernelModules = [ "uvcvideo" ];
   boot.kernelModules = ["kvm-intel"]; # kvm virtualization support
   boot.extraModprobeConfig = "options kvm_intel nested=1"; # for intel cpu
-  boot.kernelParams = ["nvidia.NVreg_PreserveVideoMemoryAllocations=1" "ibt=off" "acpi_backlight=native"];
-  boot.extraModulePackages = [];
+  boot.kernelParams = ["ibt=off" "acpi_backlight=native" ];
+  boot.extraModulePackages = [ myuvcvideo ];
   # clear /tmp on boot to get a stateless /tmp directory.
   boot.tmp.cleanOnBoot = true;
 
+  
   # Enable binfmt emulation of aarch64-linux, this is required for cross compilation.
   boot.binfmt.emulatedSystems = ["aarch64-linux" "riscv64-linux"];
   # supported file systems, so we can mount any removable disks with these filesystems

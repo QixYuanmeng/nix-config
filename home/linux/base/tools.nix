@@ -4,7 +4,7 @@
     # misc
     libnotify
     wireguard-tools # manage wireguard vpn manually, via wg-quick
-
+    clash-verge-rev
     ventoy # create bootable usb
     virt-viewer # vnc connect to VM, used by kubevirt
   ];

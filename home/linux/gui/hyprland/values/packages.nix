@@ -11,7 +11,7 @@
     wlogout # logout menu
     wl-clipboard # copying and pasting
     hyprpicker # color picker
-
+    microsoft-edge
     pkgs-unstable.hyprshot # screen shot
     grim # taking screenshots
     slurp # selecting a region to screenshot

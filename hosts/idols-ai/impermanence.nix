@@ -107,7 +107,7 @@
         ".config/emacs"
         ".config/yesplaymusic"
         "org" #  org files
-
+        ".mbwarband"
         # vscode
         ".vscode"
         ".vscode-insiders"
