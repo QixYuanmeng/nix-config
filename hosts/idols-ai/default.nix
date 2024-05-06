@@ -38,6 +38,7 @@ in {
     # required by most wayland compositors!
     modesetting.enable = true;
     powerManagement.enable = true;
+    powerManagement.finegrained = true;
     prime = {
         offload.enable = true;
         offload.enableOffloadCmd = true;

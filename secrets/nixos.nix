@@ -87,12 +87,16 @@ in {
           # ---------------------------------------------
 
           # .age means the decrypted file is still encrypted by age(via a passphrase)
-          "qix.age" =
+          "qix" =
             {
               file = "${mysecrets}/qix.age";
             }
             // noaccess;
-
+          "clash-providers" = 
+            {
+              file = "${mysecrets}/clash-providers.age";
+            }
+            // user_readable;
           # ---------------------------------------------
           # only root can read this file.
           # ---------------------------------------------
@@ -164,8 +168,13 @@ in {
           #   user = myvars.username;
           # };
 
-          "agenix/qix.age" = {
-            source = config.age.secrets."qix.age".path;
+          "agenix/qix" = {
+            source = config.age.secrets."qix".path;
+            mode = "0000";
+          };
+
+          "agenix/clash-providers" = {
+            source = config.age.secrets."clash-providers".path;
             mode = "0000";
           };
 
