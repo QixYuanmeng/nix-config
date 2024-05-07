@@ -12,7 +12,7 @@
         monitor = "DP-1,2560x1440@170,auto,1,bitdepth,10";
       };
     };
-    i3.nvidia = true;
+    i3.nvidia = false;
   };
   modules.editors.emacs = {
     enable = true;

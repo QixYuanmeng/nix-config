@@ -25,11 +25,17 @@
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
   boot.initrd.availableKernelModules = ["xhci_pci" "vmd" "thunderbolt" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod"];
-  boot.initrd.kernelModules = [ "uvcvideo" ];
+  boot.initrd.kernelModules = [ "myuvcvideo" ];
   boot.kernelModules = ["kvm-intel"]; # kvm virtualization support
-  boot.extraModprobeConfig = "options kvm_intel nested=1"; # for intel cpu
-  boot.kernelParams = ["ibt=off" "acpi_backlight=native" ];
+  boot.kernelParams = ["ibt=off" "acpi_backlight=native"];
   boot.extraModulePackages = [ myuvcvideo ];
+  boot.extraModprobeConfig = ''
+  options kvm_intel nested=1
+  blacklist nouveau
+  options nouveau modeset=0
+  blacklist uvcvideo
+'';
+  
   # clear /tmp on boot to get a stateless /tmp directory.
   boot.tmp.cleanOnBoot = true;
 

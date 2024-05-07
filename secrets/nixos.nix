@@ -121,11 +121,11 @@ in {
           #   }
           #   // high_security;
 
-          # "nix-access-tokens" =
-          #   {
-          #     file = "${mysecrets}/nix-access-tokens.age";
-          #   }
-          #   // high_security;
+          "nix-access-tokens" =
+            {
+              file = "${mysecrets}/nix-access-tokens.age";
+             }
+             // high_security;
 
           # # ---------------------------------------------
           # # user can read this file.
@@ -177,6 +177,7 @@ in {
             source = config.age.secrets."clash-providers".path;
             mode = "0000";
           };
+
 
           # The following secrets are used by home-manager modules
           # So we need to make then readable by the user
