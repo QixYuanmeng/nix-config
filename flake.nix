@@ -39,6 +39,9 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
+    
+    nur.url = "github:nix-community/NUR";
+
 
     # for macos
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-23.11-darwin";
@@ -101,10 +104,10 @@
     };
 
     # add git hooks to format nix code before commit
-    # pre-commit-hooks = {
-    #   url = "github:cachix/pre-commit-hooks.nix";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nuenv.url = "github:DeterminateSystems/nuenv";
 
@@ -160,5 +163,10 @@
 
     # aarch64 SBCs
     nixos-rk3588.url = "github:ryan4yin/nixos-rk3588";
+
+    nvimdots = {
+      url = "github:ayamir/nvimdots";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }

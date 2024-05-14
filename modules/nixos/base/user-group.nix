@@ -34,6 +34,8 @@
       "wireshark"
       "adbusers"
       "libvirtd"
+      "mysql"
+      "redis"
     ];
   };
 

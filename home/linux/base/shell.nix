@@ -1,6 +1,7 @@
 {
   config,
   myvars,
+  pkgs,
   ...
 }: let
   d = config.xdg.dataHome;
@@ -26,5 +27,8 @@ in rec {
 
     # enable scrolling in git diff
     DELTA_PAGER = "less -R";
+
+    #:w
+    #VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/intel_icd.x86_64.json;/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json;";
   };
 }

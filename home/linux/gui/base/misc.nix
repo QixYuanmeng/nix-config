@@ -21,6 +21,10 @@
     # misc
     flameshot
     ventoy # multi-boot usb creator
+    
+    pkgs.nur.repos.linyinfeng.wemeet
+
+    wpsoffice-cn
   ];
 
   # GitHub CLI tool

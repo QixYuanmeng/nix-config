@@ -14,6 +14,10 @@ in
   nixpkgs.lib.nixosSystem {
     inherit system specialArgs;
     modules =
+    [
+            { nixpkgs.overlays = [ inputs.nur.overlay ]; }
+       inputs.nur.nixosModules.nur
+    ] ++
       nixos-modules
       ++ [
         nixos-generators.nixosModules.all-formats
@@ -25,7 +29,6 @@ in
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-
             home-manager.extraSpecialArgs = specialArgs;
             home-manager.users."${myvars.username}".imports = home-modules;
           }

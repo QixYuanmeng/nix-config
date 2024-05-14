@@ -42,6 +42,7 @@
           setuptools
           paramiko
           rapidfuzz
+          devtools
         ]
     ))
 
@@ -49,6 +50,9 @@
     rust-analyzer
     cargo # rust package manager
     rustfmt
+
+    #-- slint
+    slint-lsp
 
     #-- nix
     nil

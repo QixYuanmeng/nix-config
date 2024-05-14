@@ -76,6 +76,7 @@ return {
       "terraformls", -- terraform hcl
       "nushell", -- nushell language server
       "scheme_langserver", -- scheme language server
+      "slint_lsp",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields

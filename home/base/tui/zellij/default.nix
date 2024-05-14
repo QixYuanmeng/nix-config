@@ -7,7 +7,7 @@ in {
     enable = true;
   };
   # auto start zellij in nushell
-  /*
+ 
   programs.nushell.extraConfig = ''
     # auto start zellij
     # except when in emacs or zellij itself
@@ -25,7 +25,7 @@ in {
       }
     }
   '';
-  */
+  
   # only works in bash/zsh, not nushell
   home.shellAliases = shellAliases;
   programs.nushell.shellAliases = shellAliases;

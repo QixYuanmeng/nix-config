@@ -5,6 +5,9 @@
 }: {
   # to install chrome, you need to enable unfree packages
   nixpkgs.config.allowUnfree = lib.mkForce true;
+  nixpkgs.config.permittedInsecurePackages = [
+                "openssl-1.1.1w"
+              ];
 
   # do garbage collection weekly to keep disk usage low
   nix.gc = {
@@ -16,6 +19,7 @@
   # Manual optimise storage: nix-store --optimise
   # https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf-auto-optimise-store
   nix.settings.auto-optimise-store = true;
+  programs.nix-ld.enable = true;
 
   nix.channel.enable = false; # remove nix-channel related tools & configs, we use flakes instead.
 }

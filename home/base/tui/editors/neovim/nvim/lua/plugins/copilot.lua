@@ -5,6 +5,7 @@ return {
     opts.filetypes = {
       yaml = true,
       markdown = true,
+      rust = true,
     }
   end,
 }
