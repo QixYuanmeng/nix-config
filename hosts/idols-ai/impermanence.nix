@@ -57,7 +57,7 @@
         "codes"
         "nix-config"
         "tmp"
-
+        
         "Downloads"
         "Music"
         "Pictures"
@@ -114,15 +114,16 @@
         ".config/Code/User"
         ".config/Code - Insiders/User"
 
+
+
         # browsers
         ".mozilla"
         ".config/google-chrome"
+        ".config/Kingsoft"
 
         # neovim / remmina / flatpak / ...
         ".local/share"
         ".local/state"
-
-        ".cache/JetBrains"
 
         # language package managers
         ".npm"
@@ -139,7 +140,8 @@
       files = [
         ".wakatime.cfg"
         ".config/nushell/history.txt"
-        ".cache/rofi.druncache"
+        ".cache/rofi3.druncache"
+        ".cache/rofi-entry-history.txt"
       ];
     };
   };

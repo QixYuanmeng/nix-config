@@ -61,4 +61,5 @@
     #   ......
     qemu
   ];
+  #services.qemuGuest.enable = true;
 }

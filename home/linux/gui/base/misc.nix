@@ -13,7 +13,7 @@
     telegram-desktop
     discord
     pkgs-unstable.qq # https://github.com/NixOS/nixpkgs/tree/master/pkgs/applications/networking/instant-messengers/qq
-
+    wechat-uos
     # remote desktop(rdp connect)
     remmina
     freerdp # required by remmina

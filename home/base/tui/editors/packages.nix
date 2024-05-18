@@ -33,6 +33,7 @@
           requests
           pyquery
           pyyaml
+          boto3
 
           ## emacs's lsp-bridge dependenciesge
           epc
