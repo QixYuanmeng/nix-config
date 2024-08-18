@@ -118,11 +118,11 @@ in {
           #   }
           #   // high_security;
 
-          # "nix-access-tokens" =
-          #   {
-          #     file = "${mysecrets}/nix-access-tokens.age";
-          #   }
-          #   // high_security;
+          "nix-access-tokens" =
+            {
+              file = "${mysecrets}/nix-access-tokens.age";
+            }
+            // high_security;
 
           # ---------------------------------------------
           # user can read this file.
