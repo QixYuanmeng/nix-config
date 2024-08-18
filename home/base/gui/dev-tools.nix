@@ -5,6 +5,7 @@
     wireshark # network analyzer
 
     # IDEs
-    jetbrains.idea-community
+    jetbrains.pycharm-professional
+    jetbrains.idea-ultimate
   ];
 }

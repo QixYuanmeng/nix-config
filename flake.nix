@@ -130,7 +130,7 @@
 
     # my wallpapers
     wallpapers = {
-      url = "github:ryan4yin/wallpapers";
+      url = "git+ssh://git@github.com/QixYuanmeng/wallpapers.git";
       flake = false;
     };
 

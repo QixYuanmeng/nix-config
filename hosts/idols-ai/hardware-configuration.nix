@@ -7,7 +7,11 @@
   pkgs,
   modulesPath,
   ...
-}: {
+}: 
+let
+    myuvcvideo = pkgs.callPackage ./uvc.nix { kernel = config.boot.kernelPackages.kernel; };
+  in
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
@@ -22,11 +26,15 @@
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
   boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "vmd" "thunderbolt" "nvme" "usbhid" "usb_storage" "sd_mod"];
-  boot.initrd.kernelModules = [];
+  boot.initrd.kernelModules = [ "myuvcvideo" ];
   boot.kernelModules = ["kvm-intel"]; # kvm virtualization support
-  boot.extraModprobeConfig = "options kvm_intel nested=1"; # for intel cpu
+  boot.extraModprobeConfig = ''
+  options kvm_intel nested=1 
+  blacklist nouveau
+  options nouveau modeset=0
+  blacklist uvcvideo''; # for intel cpu
   boot.kernelParams = ["nvidia.NVreg_PreserveVideoMemoryAllocations=1" "ibt=off" "acpi_backlight=native"];
-  boot.extraModulePackages = [];
+  boot.extraModulePackages = [ myuvcvideo ];
   # clear /tmp on boot to get a stateless /tmp directory.
   boot.tmp.cleanOnBoot = true;
 
@@ -51,7 +59,7 @@
       device = "/dev/disk/by-uuid/d706f3bb-a6bb-4c71-83a8-7b5253885f1d";
       # the keyfile(or device partition) that should be used as the decryption key for the encrypted device.
       # if not specified, you will be prompted for a passphrase instead.
-      #keyFile = "/root-part.key";
+      # keyFile = "/persistent/etc/agenix/luks.age";
 
       # whether to allow TRIM requests to the underlying device.
       # it's less secure, but faster.

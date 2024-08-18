@@ -63,7 +63,13 @@
         "Pictures"
         "Documents"
         "Videos"
-
+        "HowNewProjects"
+        "Projects"
+        
+        {
+          directory = ".cache/JetBrains";
+          mode = "0755";
+        }
         {
           directory = ".gnupg";
           mode = "0700";
@@ -127,6 +133,10 @@
         # neovim plugins(wakatime & copilot)
         ".wakatime"
         ".config/github-copilot"
+
+        ".config/Thunar"
+        ".config/googel-chrome"
+        
       ];
       files = [
         ".wakatime.cfg"

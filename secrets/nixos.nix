@@ -125,15 +125,21 @@ in {
             }
             // high_security;
 
+            "luks.age" = {
+            file = "${mysecrets}/luks.age";
+            mode = "0400";
+            owner = "root";
+          };
+
           # ---------------------------------------------
           # user can read this file.
           # ---------------------------------------------
 
-          # "ssh-key-romantic" =
-          #   {
-          #     file = "${mysecrets}/ssh-key-romantic.age";
-          #   }
-          #   // user_readable;
+          "config.yaml" =
+            {
+              file = "${mysecrets}/config.yaml";
+            }
+            // user_readable;
 
           # # alias-for-work
           # "alias-for-work.nushell" =
@@ -169,6 +175,12 @@ in {
           "agenix/qix.age" = {
             source = config.age.secrets."qix.age".path;
             mode = "0000";
+          };
+
+          "agenix/luks.age" = {
+            source = config.age.secrets."luks.age".path;
+            mode = "0400";
+            user = "root";
           };
 
           # The following secrets are used by home-manager modules

@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "NUR": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1723955500,
-        "narHash": "sha256-gIfQ0/pMSdQNh2TZm5J1FPgYqTjKADGR/CuVhm7bYhc=",
-        "owner": "nix-community",
-        "repo": "NUR",
-        "rev": "4ba8abc655ccf3b432c2c4235a80364325f3ea8d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "NUR",
-        "type": "github"
-      }
-    },
     "agenix": {
       "inputs": {
         "agenix": "agenix_2",
@@ -765,6 +749,21 @@
         "type": "github"
       }
     },
+    "nur": {
+      "locked": {
+        "lastModified": 1723959581,
+        "narHash": "sha256-5aLv+r8HY0MNGdq3tB1OOY2R93oRuFT0NJvpg/4jyrk=",
+        "owner": "nix-community",
+        "repo": "NUR",
+        "rev": "8635a022d528532bac6f40a4a44b0a015c25a7fd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "NUR",
+        "type": "github"
+      }
+    },
     "nur-ryan4yin": {
       "inputs": {
         "nixpkgs": "nixpkgs_4"
@@ -851,7 +850,6 @@
     },
     "root": {
       "inputs": {
-        "NUR": "NUR",
         "agenix": "agenix",
         "anyrun": "anyrun",
         "disko": "disko",
@@ -870,6 +868,7 @@
         "nixpkgs-stable": "nixpkgs-stable_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nuenv": "nuenv",
+        "nur": "nur",
         "nur-ryan4yin": "nur-ryan4yin",
         "polybar-themes": "polybar-themes",
         "pre-commit-hooks": "pre-commit-hooks",
@@ -1051,17 +1050,17 @@
     "wallpapers": {
       "flake": false,
       "locked": {
-        "lastModified": 1703310017,
-        "narHash": "sha256-SL3PIDa4BNz2rDZ/9KwnJCAfhelIoqpLtQ/FSYgfusI=",
-        "owner": "ryan4yin",
-        "repo": "wallpapers",
-        "rev": "20dea02ee2c0bb74dadcc3d4ec5efe78d00520dc",
-        "type": "github"
+        "lastModified": 1716111595,
+        "narHash": "sha256-5jFQUzitwMCRLsrR1HirFKafkTa/xWMj9vghW7eogRQ=",
+        "ref": "refs/heads/main",
+        "rev": "c2be646c648fe3c559c49d340c605b86cd12a361",
+        "revCount": 1,
+        "type": "git",
+        "url": "ssh://git@github.com/QixYuanmeng/wallpapers.git"
       },
       "original": {
-        "owner": "ryan4yin",
-        "repo": "wallpapers",
-        "type": "github"
+        "type": "git",
+        "url": "ssh://git@github.com/QixYuanmeng/wallpapers.git"
       }
     }
   },
