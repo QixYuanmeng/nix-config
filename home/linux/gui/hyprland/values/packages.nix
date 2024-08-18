@@ -18,7 +18,7 @@
     wf-recorder # screen recording
 
     mako # the notification daemon, the same as dunst
-
+    light
     yad # a fork of zenity, for creating dialogs
 
     # audio

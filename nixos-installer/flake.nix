@@ -20,8 +20,8 @@
         specialArgs =
           inputs
           // {
-            myvars.username = "ryan";
-            myvars.userfullname = "Ryan Yin";
+            myvars.username = "qix";
+            myvars.userfullname = "QixYuanmeng";
           };
         modules = [
           {networking.hostName = "ai";}

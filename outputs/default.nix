@@ -26,6 +26,11 @@
         # To use chrome, we need to allow the installation of non-free software
         config.allowUnfree = true;
       };
+
+      nur = import inputs.NUR {
+          nurpkgs = import nixpkgs { system = "x86_64-linux"; };
+          pkgs = nixpkgs.legacyPackages.${system};
+      };
     };
 
   # This is the args for all the haumea modules in this folder.

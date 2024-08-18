@@ -138,5 +138,6 @@
       url = "github:ryan4yin/nur-packages";
       # inputs.nixpkgs.follows = "nixpkgs";
     };
+    nur.url = "github:nix-community/NUR";
   };
 }

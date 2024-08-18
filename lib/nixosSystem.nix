@@ -14,6 +14,10 @@ in
   nixpkgs.lib.nixosSystem {
     inherit system specialArgs;
     modules =
+    [
+            { nixpkgs.overlays = [ inputs.nur.overlay ]; }
+       inputs.nur.nixosModules.nur
+    ] ++
       nixos-modules
       ++ [
         nixos-generators.nixosModules.all-formats
