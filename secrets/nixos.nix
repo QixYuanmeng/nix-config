@@ -60,6 +60,7 @@ in {
             # To decrypt secrets on boot, this key should exists when the system is booting,
             # so we should use the real key file path(prefixed by `/persistent/`) here, instead of the path mounted by impermanence.
             "/persistent/etc/ssh/ssh_host_ed25519_key" # Linux
+            "/home/qix/.ssh/qixNix"
           ]
           else [
             "/etc/ssh/ssh_host_ed25519_key"
