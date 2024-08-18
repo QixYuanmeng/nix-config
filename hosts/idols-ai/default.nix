@@ -27,7 +27,7 @@ in {
 
   # conflict with feature: containerd-snapshotter
   # virtualisation.docker.storageDriver = "btrfs";
-
+  hardware.nvidia-container-toolkit.enable = true;
   # for Nvidia GPU
   services.xserver.videoDrivers = ["nvidia"]; # will install nvidia-vaapi-driver by default
   hardware.nvidia = {
@@ -39,7 +39,7 @@ in {
     modesetting.enable = true;
     powerManagement.enable = true;
   };
-  virtualisation.docker.enableNvidia = true; # for nvidia-docker
+  # virtualisation.docker.enableNvidia = true; # for nvidia-docker
 
   hardware.graphics = {
     enable = true;
