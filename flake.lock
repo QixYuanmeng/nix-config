@@ -470,18 +470,18 @@
     "mysecrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1723827270,
-        "narHash": "sha256-nBq/Sp7u+riKV7xNWq85+owzUGfWdpKdq3qR/0PYTSU=",
+        "lastModified": 1715399465,
+        "narHash": "sha256-PaQmH15vB0k0sSPG1VZ0j2hSYV8TtEHjU25AfLHf4LE=",
         "ref": "refs/heads/main",
-        "rev": "f80a6c11f7b27e257e07f294b45c64a1369438a4",
+        "rev": "75d1cd163b5a607012aec75b1e423403e9cb09d5",
         "shallow": true,
         "type": "git",
-        "url": "ssh://git@github.com/ryan4yin/nix-secrets.git"
+        "url": "ssh://git@github.com/QixYuanmeng/nix-secrets.git"
       },
       "original": {
         "shallow": true,
         "type": "git",
-        "url": "ssh://git@github.com/ryan4yin/nix-secrets.git"
+        "url": "ssh://git@github.com/QixYuanmeng/nix-secrets.git"
       }
     },
     "nix-darwin": {

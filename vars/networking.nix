@@ -1,8 +1,8 @@
 {lib}: rec {
-  mainGateway = "192.168.5.1"; # main router
+  #mainGateway = "192.168.5.1"; # main router
   # use suzi as the default gateway
   # it's a subrouter with a transparent proxy
-  defaultGateway = "192.168.5.178";
+  #defaultGateway = "192.168.5.178";
   nameservers = [
     "119.29.29.29" # DNSPod
     "223.5.5.5" # AliDNS
@@ -141,13 +141,13 @@
     (
       key: val: {
         interfaces."${val.iface}" = {
-          useDHCP = false;
-          ipv4.addresses = [
-            {
-              inherit prefixLength;
-              address = val.ipv4;
-            }
-          ];
+          useDHCP = true;
+          #ipv4.addresses = [
+          #  {
+          #    inherit prefixLength;
+          #    address = val.ipv4;
+          #  }
+          #];
         };
       }
     )
