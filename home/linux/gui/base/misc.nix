@@ -4,7 +4,6 @@
   nur,
   ...
 }: {
-
   home.packages = with pkgs; [
     # GUI apps
     # e-book viewer(.epub/.mobi/...)
@@ -15,7 +14,7 @@
     telegram-desktop
     #discord
     pkgs-unstable.qq # https://github.com/NixOS/nixpkgs/tree/master/pkgs/applications/networking/instant-messengers/qq
-
+    # pkgs-unstable.wechat-uos
     # remote desktop(rdp connect)
     remmina
     freerdp # required by remmina
@@ -27,6 +26,8 @@
     pkgs.nur.repos.linyinfeng.wemeet
 
     wpsoffice-cn
+
+    feishu
   ];
 
   # GitHub CLI tool

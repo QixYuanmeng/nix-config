@@ -15,6 +15,15 @@ in
     inherit system specialArgs;
     modules =
     [
+        inputs.daeuniverse.nixosModules.dae
+        inputs.daeuniverse.nixosModules.daed
+        {
+            environment.systemPackages =
+    with inputs.daeuniverse.packages.x86_64-linux;
+      [ dae daed ];
+        }
+      ] ++
+    [
             { nixpkgs.overlays = [ inputs.nur.overlay ]; }
        inputs.nur.nixosModules.nur
     ] ++

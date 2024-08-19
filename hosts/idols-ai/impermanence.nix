@@ -38,7 +38,7 @@
       "/etc/secureboot" # lanzaboote - secure boot
       # my secrets
       "/etc/agenix/"
-
+      "/etc/daed/"
       "/var/log"
       "/var/lib"
 
@@ -65,11 +65,9 @@
         "Videos"
         "HowNewProjects"
         "Projects"
+
+        ".java"
         
-        {
-          directory = ".cache/JetBrains";
-          mode = "0755";
-        }
         {
           directory = ".gnupg";
           mode = "0700";

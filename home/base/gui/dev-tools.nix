@@ -7,5 +7,6 @@
     # IDEs
     jetbrains.pycharm-professional
     jetbrains.idea-ultimate
+
   ];
 }

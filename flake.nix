@@ -139,5 +139,7 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     };
     nur.url = "github:nix-community/NUR";
+
+    daeuniverse.url = "github:daeuniverse/flake.nix";
   };
 }

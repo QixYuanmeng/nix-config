@@ -141,6 +141,13 @@ in {
             }
             // user_readable;
 
+
+            "config.dae" =
+            {
+              file = "${mysecrets}/config.dae";
+            }
+            // user_readable;
+
           # # alias-for-work
           # "alias-for-work.nushell" =
           #   {
