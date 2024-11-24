@@ -6,8 +6,8 @@
   home.packages = with pkgs; [
     waybar # the status bar
     swaybg # the wallpaper
-    swayidle # the idle timeout
-    swaylock # locking the screen
+    hypridle # the idle timeout
+    hyprlock # locking the screen
     wlogout # logout menu
     wl-clipboard # copying and pasting
     hyprpicker # color picker
@@ -18,7 +18,7 @@
     wf-recorder # screen recording
 
     mako # the notification daemon, the same as dunst
-    light
+
     yad # a fork of zenity, for creating dialogs
 
     # audio

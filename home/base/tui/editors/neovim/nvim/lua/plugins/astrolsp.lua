@@ -12,7 +12,7 @@ return {
     features = {
       autoformat = true, -- enable or disable auto formatting on start
       codelens = true, -- enable/disable codelens refresh on start
-      inlay_hints = false, -- enable/disable inlay hints on start
+      inlay_hints = true, -- enable/disable inlay hints on start
       semantic_tokens = true, -- enable/disable semantic token highlighting
     },
     -- customize lsp formatting options
@@ -53,7 +53,7 @@ return {
       "marksman", -- markdown ls
       "nickel_ls", -- nickel language server
       "nil_ls", -- nix language server
-      "bufls", -- protocol buffer language server
+      "buf_ls", -- protocol buffer language server
       "dockerls", -- dockerfile
       "cmake", -- cmake language server
       "sqls", -- sql language server
@@ -64,7 +64,7 @@ return {
       "jdtls", -- java language server, provides only basic features
       "rust_analyzer", -- rust
       "pyright", -- python
-      "ruff_lsp", -- extremely fast Python linter and code transformation
+      "ruff", -- extremely fast Python linter and code transformation
       -- "julials", -- julia language server
       -- "zls", -- zig language server
       "lua_ls", -- lua
@@ -72,7 +72,7 @@ return {
       "nushell", -- nushell language server
 
       ---- Web Development
-      "tsserver", -- typescript/javascript language server
+      "ts_ls", -- typescript/javascript language server
       "tailwindcss", -- tailwindcss language server
       "html", -- html language server
       "cssls", -- css language server
@@ -100,6 +100,18 @@ return {
       scheme_langserver = {
         filetypes = { "scheme", "scm" },
         single_file_support = true,
+      },
+      rust_analyzer = {
+        settings = {
+          -- Make the rust-analyzer use its own profile,
+          -- so you can run cargo build without that being blocked while rust-analyzer runs.
+          ["rust-analyzer"] = {
+            cargo = {
+              extraEnv = { CARGO_PROFILE_RUST_ANALYZER_INHERITS = "dev" },
+              extraArgs = { "--profile", "rust-analyzer" },
+            },
+          },
+        },
       },
     },
     -- customize how language servers are attached

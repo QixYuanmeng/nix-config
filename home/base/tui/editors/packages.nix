@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  pkgs-unstable,
+  ...
+}: {
   nixpkgs.config = {
     programs.npm.npmrc = ''
       prefix = ''${HOME}/.npm-global
@@ -36,7 +40,7 @@
       marksman # language server for markdown
       glow # markdown previewer
       pandoc # document converter
-      hugo # static site generator
+      pkgs-unstable.hugo # static site generator
 
       #-- sql
       sqlfluff
@@ -60,13 +64,14 @@
       # llvmPackages.clang-unwrapped
       clang-tools
       lldb
+      vscode-extensions.vadimcn.vscode-lldb.adapter # codelldb - debugger
 
       #-- python
       pyright # python language server
       (python311.withPackages (
         ps:
           with ps; [
-            ruff-lsp
+            ruff
             black # python formatter
             # debugpy
 
@@ -91,9 +96,12 @@
       ))
 
       #-- rust
-      rust-analyzer
-      cargo # rust package manager
-      rustfmt
+      # we'd better use the rust-overlays for rust development
+      pkgs-unstable.rustc
+      pkgs-unstable.rust-analyzer
+      pkgs-unstable.cargo # rust package manager
+      pkgs-unstable.rustfmt
+      pkgs-unstable.clippy # rust linter
 
       #-- golang
       go
@@ -138,6 +146,11 @@
       guile
       racket-minimal
       fnlfmt # fennel
+      (
+        if pkgs.stdenv.isDarwin
+        then pkgs.emptyDirectory
+        else pkgs-unstable.akkuPackages.scheme-langserver
+      )
     ]
     ++ [
       proselint # English prose linter

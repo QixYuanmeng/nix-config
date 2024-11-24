@@ -1,5 +1,5 @@
 # ==============================================
-# Based on doomemacs's auther's config:
+# Based on doomemacs's author's config:
 #   https://github.com/hlissner/dotfiles/blob/master/modules/editors/emacs.nix
 #
 # Emacs Tutorials:
@@ -15,18 +15,20 @@
 }:
 with lib; let
   cfg = config.modules.editors.emacs;
-  envExtra = ''
+  envExtra = lib.mkAfter ''
     export PATH="${config.xdg.configHome}/emacs/bin:$PATH"
   '';
   shellAliases = {
     e = "emacsclient --create-frame"; # gui
-    et = "emacsclient --create-frame --tty"; # termimal
+    et = "emacsclient --create-frame --tty"; # terminal
   };
   librime-dir = "${config.xdg.dataHome}/emacs/librime";
   parinfer-rust-lib-dir = "${config.xdg.dataHome}/emacs/parinfer-rust";
   myEmacsPackagesFor = emacs: ((pkgs.emacsPackagesFor emacs).emacsWithPackages (epkgs: [
     epkgs.vterm
   ]));
+  # to make this symlink work, we need to git clone this repo to your home directory.
+  configPath = "${config.home.homeDirectory}/nix-config/home/base/tui/editors/emacs/doom";
 in {
   options.modules.editors.emacs = {
     enable = mkEnableOption "Emacs Editor";
@@ -51,7 +53,7 @@ in {
 
         ## Module dependencies
         # :checkers spell
-        (aspellWithDicts (ds: with ds; [en en-computers en-science]))
+        # (aspellWithDicts (ds: with ds; [en en-computers en-science]))
         # :tools editorconfig
         editorconfig-core-c # per-project style config
         # :tools lookup & :lang org +roam
@@ -65,10 +67,7 @@ in {
       home.shellAliases = shellAliases;
       programs.nushell.shellAliases = shellAliases;
 
-      xdg.configFile."doom" = {
-        source = ./doom;
-        force = true;
-      };
+      xdg.configFile."doom".source = config.lib.file.mkOutOfStoreSymlink configPath;
 
       home.activation.installDoomEmacs = lib.hm.dag.entryAfter ["writeBoundary"] ''
         ${pkgs.rsync}/bin/rsync -avz --chmod=D2755,F744 ${doomemacs}/ ${config.xdg.configHome}/emacs/

@@ -1,7 +1,6 @@
 {
   pkgs,
   pkgs-unstable,
-  nur,
   ...
 }: {
   home.packages = with pkgs; [
@@ -12,9 +11,8 @@
 
     # instant messaging
     telegram-desktop
-    #discord
-    pkgs-unstable.qq # https://github.com/NixOS/nixpkgs/tree/master/pkgs/applications/networking/instant-messengers/qq
-    # pkgs-unstable.wechat-uos
+    # discord # update too frequently, use the web version instead
+
     # remote desktop(rdp connect)
     remmina
     freerdp # required by remmina
@@ -23,11 +21,13 @@
     flameshot
     ventoy # multi-boot usb creator
 
-    pkgs.nur.repos.linyinfeng.wemeet
+    # my custom hardened packages
+    pkgs.nixpaks.qq
+    pkgs.nixpaks.qq-desktop-item
 
-    wpsoffice-cn
-
-    feishu
+    wechat-uos
+    # pkgs.nixpaks.wechat-uos
+    # pkgs.nixpaks.wechat-uos-desktop-item
   ];
 
   # GitHub CLI tool

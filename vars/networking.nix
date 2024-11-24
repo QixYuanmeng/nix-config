@@ -1,8 +1,8 @@
 {lib}: rec {
-  #mainGateway = "192.168.5.1"; # main router
+  mainGateway = "192.168.5.1"; # main router
   # use suzi as the default gateway
   # it's a subrouter with a transparent proxy
-  #defaultGateway = "192.168.5.178";
+  defaultGateway = "192.168.5.178";
   nameservers = [
     "119.29.29.29" # DNSPod
     "223.5.5.5" # AliDNS
@@ -141,13 +141,13 @@
     (
       key: val: {
         interfaces."${val.iface}" = {
-          useDHCP = true;
-          #ipv4.addresses = [
-          #  {
-          #    inherit prefixLength;
-          #    address = val.ipv4;
-          #  }
-          #];
+          useDHCP = false;
+          ipv4.addresses = [
+            {
+              inherit prefixLength;
+              address = val.ipv4;
+            }
+          ];
         };
       }
     )
@@ -193,7 +193,7 @@
         publicKey = value.publicKey;
       })
       {
-        aquamarine.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIbIecyrmrBpjD497lA2adJeTpsubZ3dozEraLGCcgVi root@aquamarine";
+        aquamarine.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEOXFhFu9Duzp6ZBE288gDZ6VLrNaeWL4kDrFUh9Neic root@aquamarine";
         # ruby.publicKey = "";
         # kana.publicKey = "";
       };

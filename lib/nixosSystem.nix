@@ -14,19 +14,6 @@ in
   nixpkgs.lib.nixosSystem {
     inherit system specialArgs;
     modules =
-    [
-        inputs.daeuniverse.nixosModules.dae
-        inputs.daeuniverse.nixosModules.daed
-        {
-            environment.systemPackages =
-    with inputs.daeuniverse.packages.x86_64-linux;
-      [ dae daed ];
-        }
-      ] ++
-    [
-            { nixpkgs.overlays = [ inputs.nur.overlay ]; }
-       inputs.nur.nixosModules.nur
-    ] ++
       nixos-modules
       ++ [
         nixos-generators.nixosModules.all-formats
@@ -38,6 +25,7 @@ in
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "home-manager.backup";
 
             home-manager.extraSpecialArgs = specialArgs;
             home-manager.users."${myvars.username}".imports = home-modules;

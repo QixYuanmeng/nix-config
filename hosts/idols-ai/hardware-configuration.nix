@@ -7,11 +7,7 @@
   pkgs,
   modulesPath,
   ...
-}: 
-let
-    myuvcvideo = pkgs.callPackage ./uvc.nix { kernel = config.boot.kernelPackages.kernel; };
-  in
-{
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
@@ -25,16 +21,11 @@ let
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "vmd" "thunderbolt" "nvme" "usbhid" "usb_storage" "sd_mod"];
-  boot.initrd.kernelModules = [ "myuvcvideo" ];
+  boot.initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "vmd" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod"];
+  boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-intel"]; # kvm virtualization support
-  boot.extraModprobeConfig = ''
-  options kvm_intel nested=1 
-  blacklist nouveau
-  options nouveau modeset=0
-  blacklist uvcvideo''; # for intel cpu
-  boot.kernelParams = ["nvidia.NVreg_PreserveVideoMemoryAllocations=1" "ibt=off" "acpi_backlight=native"];
-  boot.extraModulePackages = [ myuvcvideo ];
+  boot.extraModprobeConfig = "options kvm_intel nested=1"; # for intel cpu
+  boot.extraModulePackages = [];
   # clear /tmp on boot to get a stateless /tmp directory.
   boot.tmp.cleanOnBoot = true;
 
@@ -51,28 +42,28 @@ let
     "exfat"
   ];
 
-  boot.initrd = {
-    # unlocked luks devices via a keyfile or prompt a passphrase.
-    luks.devices."crypted-nixos" = {
-      # NOTE: DO NOT use device name here(like /dev/sda, /dev/nvme0n1p2, etc), use UUID instead.
-      # https://github.com/ryan4yin/nix-config/issues/43
-      device = "/dev/disk/by-uuid/d706f3bb-a6bb-4c71-83a8-7b5253885f1d";
-      # the keyfile(or device partition) that should be used as the decryption key for the encrypted device.
-      # if not specified, you will be prompted for a passphrase instead.
-      # keyFile = "/persistent/etc/agenix/luks.age";
+  # boot.initrd = {
+  #   # unlocked luks devices via a keyfile or prompt a passphrase.
+  #   luks.devices."crypted-nixos" = {
+  #     # NOTE: DO NOT use device name here(like /dev/sda, /dev/nvme0n1p2, etc), use UUID instead.
+  #     # https://github.com/ryan4yin/nix-config/issues/43
+  #     device = "/dev/disk/by-uuid/a21ca82a-9ee6-4e5c-9d3f-a93e84e4e0f4";
+  #     # the keyfile(or device partition) that should be used as the decryption key for the encrypted device.
+  #     # if not specified, you will be prompted for a passphrase instead.
+  #     #keyFile = "/root-part.key";
 
-      # whether to allow TRIM requests to the underlying device.
-      # it's less secure, but faster.
-      allowDiscards = true;
-      # Whether to bypass dm-crypt’s internal read and write workqueues.
-      # Enabling this should improve performance on SSDs;
-      # https://wiki.archlinux.org/index.php/Dm-crypt/Specialties#Disable_workqueue_for_increased_solid_state_drive_(SSD)_performance
-      bypassWorkqueues = true;
-    };
-  };
+  #     # whether to allow TRIM requests to the underlying device.
+  #     # it's less secure, but faster.
+  #     allowDiscards = true;
+  #     # Whether to bypass dm-crypt’s internal read and write workqueues.
+  #     # Enabling this should improve performance on SSDs;
+  #     # https://wiki.archlinux.org/index.php/Dm-crypt/Specialties#Disable_workqueue_for_increased_solid_state_drive_(SSD)_performance
+  #     bypassWorkqueues = true;
+  #   };
+  # };
 
   fileSystems."/btr_pool" = {
-    device = "/dev/disk/by-uuid/ff72baf7-d437-466c-884b-caca7dd46904";
+    device = "/dev/disk/by-uuid/9e132621-8028-4f95-9fe5-cb9db272165a";
     fsType = "btrfs";
     # btrfs's top-level subvolume, internally has an id 5
     # we can access all other subvolumes from this subvolume.
@@ -89,20 +80,20 @@ let
   };
 
   fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/ff72baf7-d437-466c-884b-caca7dd46904";
+    device = "/dev/disk/by-uuid/9e132621-8028-4f95-9fe5-cb9db272165a";
     fsType = "btrfs";
     options = ["subvol=@nix" "noatime" "compress-force=zstd:1"];
   };
 
   # for guix store, which use `/gnu/store` as its store directory.
   fileSystems."/gnu" = {
-    device = "/dev/disk/by-uuid/ff72baf7-d437-466c-884b-caca7dd46904";
+    device = "/dev/disk/by-uuid/9e132621-8028-4f95-9fe5-cb9db272165a";
     fsType = "btrfs";
     options = ["subvol=@guix" "noatime" "compress-force=zstd:1"];
   };
 
   fileSystems."/persistent" = {
-    device = "/dev/disk/by-uuid/ff72baf7-d437-466c-884b-caca7dd46904";
+    device = "/dev/disk/by-uuid/9e132621-8028-4f95-9fe5-cb9db272165a";
     fsType = "btrfs";
     options = ["subvol=@persistent" "compress-force=zstd:1"];
     # impermanence's data is required for booting.
@@ -110,20 +101,20 @@ let
   };
 
   fileSystems."/snapshots" = {
-    device = "/dev/disk/by-uuid/ff72baf7-d437-466c-884b-caca7dd46904";
+    device = "/dev/disk/by-uuid/9e132621-8028-4f95-9fe5-cb9db272165a";
     fsType = "btrfs";
     options = ["subvol=@snapshots" "compress-force=zstd:1"];
   };
 
   fileSystems."/tmp" = {
-    device = "/dev/disk/by-uuid/ff72baf7-d437-466c-884b-caca7dd46904";
+    device = "/dev/disk/by-uuid/9e132621-8028-4f95-9fe5-cb9db272165a";
     fsType = "btrfs";
     options = ["subvol=@tmp" "compress-force=zstd:1"];
   };
 
   # mount swap subvolume in readonly mode.
   fileSystems."/swap" = {
-    device = "/dev/disk/by-uuid/ff72baf7-d437-466c-884b-caca7dd46904";
+    device = "/dev/disk/by-uuid/9e132621-8028-4f95-9fe5-cb9db272165a";
     fsType = "btrfs";
     options = ["subvol=@swap" "ro"];
   };
@@ -139,7 +130,7 @@ let
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/8A30-7482";
+    device = "/dev/disk/by-uuid/12CE-A600";
     fsType = "vfat";
   };
 

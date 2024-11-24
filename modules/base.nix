@@ -2,8 +2,6 @@
   pkgs,
   myvars,
   nuenv,
-  nixpkgs,
-  lib,
   ...
 } @ args: {
   nixpkgs.overlays =
@@ -11,6 +9,7 @@
       nuenv.overlays.default
     ]
     ++ (import ../overlays args);
+
   # Add my private PKI's CA certificate to the system-wide trust store.
   security.pki.certificateFiles = [
     ../certs/ecc-ca.crt
@@ -18,7 +17,7 @@
 
   # auto upgrade nix to the unstable version
   # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/tools/package-management/nix/default.nix#L284
-  #nix.package = pkgs.nixVersions.latest;
+  nix.package = pkgs.nixVersions.latest;
 
   environment.systemPackages = with pkgs; [
     git # used by nix flakes
@@ -88,34 +87,23 @@
     # substituers that will be considered before the official ones(https://cache.nixos.org)
     substituters = [
       # cache mirror located in China
-      # status: https://mirror.sjtu.edu.cn/
-      "https://mirror.sjtu.edu.cn/nix-channels/store"
       # status: https://mirrors.ustc.edu.cn/status/
-      "https://mirrors.ustc.edu.cn/nix-channels/store"
+      # "https://mirrors.ustc.edu.cn/nix-channels/store"
+      # status: https://mirror.sjtu.edu.cn/
+      # "https://mirror.sjtu.edu.cn/nix-channels/store"
+      # others
+      # "https://mirrors.sustech.edu.cn/nix-channels/store"
       "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
 
       "https://nix-community.cachix.org"
-      # my own cache server
-      "https://ryan4yin.cachix.org"
-      # cuda-maintainer's cache server
-      "https://cuda-maintainers.cachix.org"
+      # my own cache server, currently not used.
+      # "https://ryan4yin.cachix.org"
     ];
 
     trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "ryan4yin.cachix.org-1:Gbk27ZU5AYpGS9i3ssoLlwdvMIh0NxG0w8it/cv9kbU="
-      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
     ];
     builders-use-substitutes = true;
   };
-
-  # make `nix run nixpkgs#nixpkgs` use the same nixpkgs as the one used by this flake.
-  nix.registry.nixpkgs.flake = nixpkgs;
-
-  environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
-  # make `nix repl '<nixpkgs>'` use the same nixpkgs as the one used by this flake.
-  # discard all the default paths, and only use the one from this flake.
-  nix.nixPath = lib.mkForce ["/etc/nix/inputs"];
-  # https://github.com/NixOS/nix/issues/9574
-  nix.settings.nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
 }

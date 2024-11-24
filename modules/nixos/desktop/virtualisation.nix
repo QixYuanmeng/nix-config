@@ -1,11 +1,15 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  nur-ataraxiasjel,
+  ...
+}: {
   ###################################################################################
   #
   #  Virtualisation - Libvirt(QEMU/KVM) / Docker / LXD / WayDroid
   #
   ###################################################################################
 
-  # Enable nested virsualization, required by security containers and nested vm.
+  # Enable nested virtualization, required by security containers and nested vm.
   # This should be set per host in /hosts, not here.
   #
   ## For AMD CPU, add "kvm-amd" to kernelModules.
@@ -32,19 +36,30 @@
       enableOnBoot = true;
     };
 
-    libvirtd = {
-      enable = true;
-      # hanging this option to false may cause file permission issues for existing guests.
-      # To fix these, manually change ownership of affected files in /var/lib/libvirt/qemu to qemu-libvirtd.
-      qemu.runAsRoot = true;
-    };
-    waydroid.enable = true;
-    lxd.enable = true;
+    # Usage: https://wiki.nixos.org/wiki/Waydroid
+    # waydroid.enable = true;
+
+    # libvirtd = {
+    #   enable = true;
+    #   # hanging this option to false may cause file permission issues for existing guests.
+    #   # To fix these, manually change ownership of affected files in /var/lib/libvirt/qemu to qemu-libvirtd.
+    #   qemu.runAsRoot = true;
+    # };
+
+    # lxd.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
+    # This script is used to install the arm translation layer for waydroid
+    # so that we can install arm apks on x86_64 waydroid
+    #
+    # https://github.com/casualsnek/waydroid_script
+    # https://github.com/AtaraxiaSjel/nur/tree/master/pkgs/waydroid-script
+    # https://wiki.archlinux.org/title/Waydroid#ARM_Apps_Incompatible
+    # nur-ataraxiasjel.packages.${pkgs.system}.waydroid-script
+
     # Need to add [File (in the menu bar) -> Add connection] when start for the first time
-    virt-manager
+    # virt-manager
 
     # QEMU/KVM(HostCpuOnly), provides:
     #   qemu-storage-daemon qemu-edid qemu-ga

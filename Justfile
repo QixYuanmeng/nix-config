@@ -56,7 +56,7 @@ gc:
   # garbage collect all unused nix store entries(system-wide)
   sudo nix-collect-garbage --delete-older-than 7d
   # garbage collect all unused nix store entries(for the user - home-manager)
-  # https://github.com/LnL7/nix-darwin/issues/237
+  # https://github.com/NixOS/nix/issues/8508
   nix-collect-garbage --delete-older-than 7d
 
 # Enter a shell session which has all the necessary tools for this flake
@@ -81,6 +81,19 @@ fmt:
 gcroot:
   ls -al /nix/var/nix/gcroots/auto/
 
+# Verify all the store entries
+# Nix Store can contains corrupted entries if the nix store object has been modified unexpectedly.
+# This command will verify all the store entries,
+# and we need to fix the corrupted entries manually via `sudo nix store delete <store-path-1> <store-path-2> ...`
+[group('nix')]
+verify-store:
+  nix store verify --all
+
+# Repair Nix Store Objects
+[group('nix')]
+repair-store *paths:
+  nix store repair {{paths}}
+
 ############################################################################
 #
 #  NixOS Desktop related commands
@@ -89,25 +102,10 @@ gcroot:
 
 [linux]
 [group('desktop')]
-i3 mode="default":
-  #!/usr/bin/env nu
-  use {{utils_nu}} *;
-  nixos-switch ai-i3 {{mode}}
-
-[linux]
-[group('desktop')]
 hypr mode="default":
   #!/usr/bin/env nu
   use {{utils_nu}} *;
   nixos-switch ai-hyprland {{mode}}
-
-
-[linux]
-[group('desktop')]
-s-i3 mode="default":
-  #!/usr/bin/env nu
-  use {{utils_nu}} *;
-  nixos-switch shoukei-i3 {{mode}}
 
 [linux]
 [group('desktop')]
@@ -153,12 +151,12 @@ fe mode="default": darwin-set-proxy
   darwin-build "fern" {{mode}};
   darwin-switch "fern" {{mode}}
 
-# Reload yabai and skhd(macOS)
+# Reset launchpad to force it to reindex Applications
 [macos]
 [group('desktop')]
-yabai-reload:
-  launchctl kickstart -k "gui/502/org.nixos.yabai";
-  launchctl kickstart -k "gui/502/org.nixos.skhd"; 
+reset-launchpad:
+  defaults write com.apple.dock ResetLaunchPad -bool true
+  killall Dock
 
 ############################################################################
 #
@@ -319,35 +317,14 @@ k3s-prod:
 k3s-test:
   colmena apply --on '@k3s-test-*' --verbose --show-trace
 
-############################################################################
-#
-#  Neovim related commands
-#
-############################################################################
-
-[group('neovim')]
-nvim-test:
-  rm -rf $"($env.HOME)/.config/nvim"
-  rsync -avz --copy-links --chmod=D2755,F744 home/base/tui/editors/neovim/nvim/ $"($env.HOME)/.config/nvim/"
-
-[group('neovim')]
-nvim-clean:
-  rm -rf $"($env.HOME)/.config/nvim"
-
 # =================================================
 # Emacs related commands
 # =================================================
 
 [group('emacs')]
 emacs-test:
-  rm -rf $"($env.HOME)/.config/doom"
-  rsync -avz --copy-links --chmod=D2755,F744 home/base/tui/editors/emacs/doom/ $"($env.HOME)/.config/doom/"
   doom clean
   doom sync
-
-[group('emacs')]
-emacs-clean:
-  rm -rf $"($env.HOME)/.config/doom/"
 
 [group('emacs')]
 emacs-purge:
@@ -382,6 +359,10 @@ emacs-reload:
 [group('common')]
 path:
    $env.PATH | split row ":"
+
+[group('common')]
+trace-access app *args:
+  strace -f -t -e trace=file {{app}} {{args}} | complete | $in.stderr | lines | find -v -r "(/nix/store|/newroot|/proc)" | parse --regex '"(/.+)"' | sort | uniq
 
 [linux]
 [group('common')]

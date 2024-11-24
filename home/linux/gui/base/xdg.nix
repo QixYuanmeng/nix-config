@@ -32,8 +32,8 @@
       enable = true;
       # let `xdg-open` to open the url with the correct application.
       defaultApplications = let
-        browser = ["google-chrome.desktop"];
-        editor = ["nvim.desktop" "Helix.desktop" "code.desktop" "code-insiders.desktop"];
+        browser = ["google-chrome-stable.desktop"];
+        editor = ["nvim.desktop" "Helix.desktop" "code.desktop"];
       in {
         "application/json" = browser;
         "application/pdf" = browser; # TODO: pdf viewer
@@ -60,11 +60,9 @@
         "x-scheme-handler/https" = browser;
         # https://github.com/microsoft/vscode/issues/146408
         "x-scheme-handler/vscode" = ["code-url-handler.desktop"]; # open `vscode://` url with `code-url-handler.desktop`
-        "x-scheme-handler/vscode-insiders" = ["code-insiders-url-handler.desktop"]; # open `vscode-insiders://` url with `code-insiders-url-handler.desktop`
-        # all other unknown schemes will be opened by this default application.
+                # all other unknown schemes will be opened by this default application.
         # "x-scheme-handler/unknown" = editor;
 
-        "x-scheme-handler/discord" = ["discord.desktop"];
         "x-scheme-handler/tg" = ["org.telegram.desktop.desktop "];
 
         "audio/*" = ["mpv.desktop"];

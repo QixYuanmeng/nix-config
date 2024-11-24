@@ -15,15 +15,27 @@
       # a private key that is used during authentication will be added to ssh-agent if it is running
       AddKeysToAgent yes
 
-      Host *
+      Host 192.168.*
         # allow to securely use local SSH agent to authenticate on the remote machine.
         # It has the same effect as adding cli option `ssh -A user@host`
         ForwardAgent yes
         # romantic holds my homelab~
-        IdentityFile ~/.ssh/qixNix
+        IdentityFile /etc/agenix/ssh-key-romantic
         # Specifies that ssh should only use the identity file explicitly configured above
         # required to prevent sending default identity files first.
         IdentitiesOnly yes
+
+      Host gtr5
+        HostName 192.168.5.172
+        Port 22
+
+      Host um560
+        HostName 192.168.5.173
+        Port 22
+
+      Host s500plus
+        HostName 192.168.5.174
+        Port 22
     '';
   };
 }

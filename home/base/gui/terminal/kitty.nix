@@ -19,7 +19,7 @@
     # kitty has catppuccin theme built-in,
     # all the built-in themes are packaged into an extra package named `kitty-themes`
     # and it's installed by home-manager if `theme` is specified.
-    theme = "Catppuccin-Mocha";
+    themeFile = "Catppuccin-Mocha";
     font = {
       name = "JetBrainsMono Nerd Font";
       # use different font size on macOS
@@ -29,7 +29,7 @@
         else 13;
     };
 
-    # consistent with wezterm
+    # consistent with other terminal emulators
     keybindings = {
       "ctrl+shift+m" = "toggle_maximized";
       "ctrl+shift+f" = "show_scrollback"; # search in the current window
@@ -40,7 +40,6 @@
       macos_option_as_alt = true; # Option key acts as Alt on macOS
       enable_audio_bell = false;
       tab_bar_edge = "top"; # tab bar on top
-      confirm_os_window_close = 0;
       #  To resolve issues:
       #    1. https://github.com/ryan4yin/nix-config/issues/26
       #    2. https://github.com/ryan4yin/nix-config/issues/8
