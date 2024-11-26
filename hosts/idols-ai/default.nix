@@ -25,6 +25,7 @@ in {
     # desktop need its cli for status bar
     networkmanager.enable = true;
   };
+  
 
   # conflict with feature: containerd-snapshotter
   # virtualisation.docker.storageDriver = "btrfs";

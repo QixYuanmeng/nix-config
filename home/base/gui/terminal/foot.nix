@@ -6,7 +6,7 @@
     settings = {
       main = {
         term = "foot"; # or "xterm-256color" for maximum compatibility
-        font = "JetBrainsMono Nerd Font:size=14";
+        font = "JetBrainsMono Nerd Font:size=10";
         dpi-aware = "yes";
 
         # Spawn a nushell in login mode via `bash`

@@ -49,9 +49,10 @@
       commandLineArgs = [
         "--ozone-platform-hint=auto"
         "--ozone-platform=wayland"
+        "--disable-gpu"
         # make it use GTK_IM_MODULE if it runs with Gtk4, so fcitx5 can work with it.
         # (only supported by chromium/chrome at this time, not electron)
-        "--gtk-version=4"
+        #"--gtk-version=4"
         # make it use text-input-v1, which works for kwin 5.27 and weston
         "--enable-wayland-ime"
 
@@ -74,15 +75,15 @@
               "--ozone-platform=wayland"
               # make it use GTK_IM_MODULE if it runs with Gtk4, so fcitx5 can work with it.
               # (only supported by chromium/chrome at this time, not electron)
-              "--gtk-version=4"
+              #"--gtk-version=4"
               # make it use text-input-v1, which works for kwin 5.27 and weston
               "--enable-wayland-ime"
-
+              "--disable-gpu"
               # TODO: fix https://github.com/microsoft/vscode/issues/187436
               # still not works...
               "--password-store=gnome" # use gnome-keyring as password store
             ];
-          })
+          });
     };
   };
 }

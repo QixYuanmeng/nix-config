@@ -25,6 +25,9 @@ in {
         "QT_QPA_PLATFORM,wayland"
         "SDL_VIDEODRIVER,wayland"
         "GDK_BACKEND,wayland"
+        "GSK_RENDERER,gl"
+        "QT_IM_MODULE,fcitx"
+        "XMODIFIERS,@im=fcitx"
       ];
     };
     extraConfig = builtins.readFile ../conf/hyprland.conf;

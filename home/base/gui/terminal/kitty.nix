@@ -26,7 +26,7 @@
       size =
         if pkgs.stdenv.isDarwin
         then 14
-        else 13;
+        else 10;
     };
 
     # consistent with other terminal emulators

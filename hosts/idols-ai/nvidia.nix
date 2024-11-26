@@ -19,9 +19,21 @@
     # package = config.boot.kernelPackages.nvidiaPackages.stable;
 
     # required by most wayland compositors!
-    modesetting.enable = true;
+    modesetting.enable = false;
     powerManagement.enable = true;
+    powerManagement.finegrained = true;
   };
+
+	hardware.nvidia.prime = {
+		offload = {
+			enable = true;
+			enableOffloadCmd = true;
+		};
+		# Make sure to use the correct Bus ID values for your system!
+		intelBusId = "PCI:0:2:0";
+		nvidiaBusId = "PCI:1:0:0";
+                # amdgpuBusId = "PCI:54:0:0"; For AMD GPU
+	};
 
   hardware.nvidia-container-toolkit.enable = true;
   hardware.graphics = {
@@ -32,7 +44,6 @@
   # disable cudasupport before this issue get fixed:
   # https://github.com/NixOS/nixpkgs/issues/338315
   nixpkgs.config.cudaSupport = false;
-
   nixpkgs.overlays = [
     (_: super: {
       blender = super.blender.override {

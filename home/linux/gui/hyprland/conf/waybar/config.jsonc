@@ -152,6 +152,7 @@
     "tooltip": false,
   },
   "backlight": {
+    "device": "intel_backlight",
     "format": "{icon} {percent}%",
     "format-icons": ["", "", "", "", "", "", "", "", ""],
   },
@@ -160,8 +161,8 @@
     "spacing": 5,
   },
   "battery": {
-    "bat": "BAT0",
-    "adapter": "ADP0",
+    "bat": "BAT1",
+    "adapter": "ACAD",
     "interval": 60,
     "states": {
       "warning": 30,

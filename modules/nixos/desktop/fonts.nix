@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs,chinese-fonts-overlay, ...}: {
   # all fonts are linked to /nix/var/nix/profiles/system/sw/share/X11/fonts
   fonts = {
     # use fonts specified by user rather than default ones
@@ -9,6 +9,8 @@
       # icon fonts
       material-design-icons
       font-awesome
+
+      foundertype-fonts
 
       # Noto 系列字体是 Google 主导的，名字的含义是「没有豆腐」（no tofu），因为缺字时显示的方框或者方框被叫作 tofu
       # Noto 系列字族名只支持英文，命名规则是 Noto + Sans 或 Serif + 文字名称。
@@ -38,6 +40,8 @@
       })
       julia-mono
       dejavu_fonts
+
+      (callPackage ./myfonts/win10-fonts.nix {})
     ];
 
     # user defined fonts
@@ -50,6 +54,10 @@
       emoji = ["Noto Color Emoji"];
     };
   };
+
+  nixpkgs.overlays = [
+    chinese-fonts-overlay.overlays.default
+  ];
 
   # https://wiki.archlinux.org/title/KMSCON
   services.kmscon = {

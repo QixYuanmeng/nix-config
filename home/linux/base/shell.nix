@@ -15,6 +15,7 @@ in rec {
     LESSHISTFILE = cache + "/less/history";
     LESSKEY = c + "/less/lesskey";
     WINEPREFIX = d + "/wine";
+    GTK_IM_MODULE = "fcitx";
 
     # set this variable make i3 failed to start
     # related issue:

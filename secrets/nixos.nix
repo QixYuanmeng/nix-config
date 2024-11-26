@@ -60,7 +60,7 @@ in {
             # To decrypt secrets on boot, this key should exists when the system is booting,
             # so we should use the real key file path(prefixed by `/persistent/`) here, instead of the path mounted by impermanence.
             "/persistent/etc/ssh/ssh_host_ed25519_key" # Linux
-            "/home/qix/.ssh/qixNix"
+            "/home/qix/.ssh/idols-ai"
           ]
           else [
             "/etc/ssh/ssh_host_ed25519_key"
@@ -125,28 +125,11 @@ in {
             }
             // high_security;
 
-            "luks.age" = {
-            file = "${mysecrets}/luks.age";
-            mode = "0400";
-            owner = "root";
-          };
 
           # ---------------------------------------------
           # user can read this file.
           # ---------------------------------------------
 
-          "config.yaml" =
-            {
-              file = "${mysecrets}/config.yaml";
-            }
-            // user_readable;
-
-
-            "config.dae" =
-            {
-              file = "${mysecrets}/config.dae";
-            }
-            // user_readable;
 
           # # alias-for-work
           # "alias-for-work.nushell" =
@@ -182,12 +165,6 @@ in {
           "agenix/qix.age" = {
             source = config.age.secrets."qix.age".path;
             mode = "0000";
-          };
-
-          "agenix/luks.age" = {
-            source = config.age.secrets."luks.age".path;
-            mode = "0400";
-            user = "root";
           };
 
           # The following secrets are used by home-manager modules
