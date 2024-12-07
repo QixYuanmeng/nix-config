@@ -19,6 +19,8 @@
   # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/tools/package-management/nix/default.nix#L284
   nix.package = pkgs.nixVersions.latest;
 
+  environment.variables.EDITOR = "nvim --clean";
+
   environment.systemPackages = with pkgs; [
     git # used by nix flakes
     git-lfs # used by huggingface models
@@ -29,6 +31,8 @@
     zstd
     unzipNLS
     p7zip
+    unar
+    unrar
 
     # Text Processing
     # Docs: https://github.com/learnbyexample/Command-line-text-processing
@@ -36,6 +40,7 @@
     gnused # GNU sed, very powerful(mainly for replacing text in files)
     gawk # GNU awk, a pattern scanning and processing language
     jq # A lightweight and flexible command-line JSON processor
+    xxd
 
     # networking tools
     mtr # A network diagnostic tool

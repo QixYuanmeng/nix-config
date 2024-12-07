@@ -12,6 +12,10 @@
     wl-clipboard # copying and pasting
     hyprpicker # color picker
     light
+    brightnessctl
+    cliphist
+    wofi
+    grimblast
 
     pkgs-unstable.hyprshot # screen shot
     grim # taking screenshots

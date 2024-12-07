@@ -14,9 +14,13 @@
     imv # simple image viewer
 
     nvtopPackages.full
+    #netease-cloud-music-gtk
+    #osdlyrics
+    waylyrics
+    qcm
 
     # video/audio tools
-    cava # for visualizing audio
+   # cava # for visualizing audio
     libva-utils
     vdpauinfo
     vulkan-tools

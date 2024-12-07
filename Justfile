@@ -26,7 +26,7 @@ test:
 # Update all the flake inputs
 [group('nix')]
 up:
-  nix flake update
+  nix flake update --accept-flake-config
 
 # Update specific input
 # Usage: just upp nixpkgs
@@ -394,3 +394,8 @@ list-inactive:
 [group('services')]
 list-failed:
   systemctl list-units -all --state=failed
+
+[linux]
+[group('services')]
+list-systemd:
+  systemctl list-units systemd-*

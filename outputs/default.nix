@@ -20,6 +20,7 @@
         inherit system; # refer the `system` parameter form outer scope recursively
         # To use chrome, we need to allow the installation of non-free software
         config.allowUnfree = true;
+        overlays =  [ inputs.fenix.overlays.default ];
       };
       pkgs-stable = import inputs.nixpkgs-stable {
         inherit system;

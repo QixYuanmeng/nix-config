@@ -3,18 +3,6 @@
   config,
   ...
 }:
-let
-  my-wpsoffice-cn = pkgs.wpsoffice-cn.overrideAttrs (oldAttrs: {
-    nativeBuildInputs = oldAttrs.nativeBuildInputs or [] ++ [ pkgs.makeWrapper ];
-    postFixup = ''
-      # Add environment variables to the WPS Office executables
-      for i in wps wpp et wpspdf; do
-        wrapProgram $out/bin/$i \
-          --set LANG "zh_CN.UTF-8"
-      done
-    '';
-  });
-in
 # processing audio/video
 {
   home.packages = with pkgs; [
@@ -24,7 +12,24 @@ in
     viu # Terminal image viewer with native support for iTerm and Kitty
     imagemagick
     graphviz
-    my-wpsoffice-cn
-    libwps
+
+    xarchiver
+
+    (obsidian.override {
+      commandLineArgs = [
+        "--ozone-platform-hint=auto"
+        "--ozone-platform=wayland"
+        #"--disable-gpu"
+        # make it use GTK_IM_MODULE if it runs with Gtk4, so fcitx5 can work with it.
+        # (only supported by chromium/chrome at this time, not electron)
+        #"--gtk-version=4"
+        # make it use text-input-v1, which works for kwin 5.27 and weston
+        "--enable-wayland-ime"
+
+        # enable hardware acceleration - vulkan api
+        # "--enable-features=Vulkan"
+      ];
+      }
+    )
   ];
 }

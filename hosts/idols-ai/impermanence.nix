@@ -39,13 +39,17 @@
       # my secrets
       "/etc/agenix/"
 
+      "/etc/dae"
+      "/etc/daed"
+
       "/var/log"
       "/var/lib"
 
       # created by modules/nixos/misc/fhs-fonts.nix
       # for flatpak apps
-      # "/usr/share/fonts"
-      # "/usr/share/icons"
+      "/usr/share/fonts"
+      "/usr/share/icons"
+
     ];
     files = [
       "/etc/machine-id"
@@ -63,6 +67,7 @@
         "Pictures"
         "Documents"
         "Videos"
+        "Projects"
 
         {
           directory = ".gnupg";
@@ -110,10 +115,23 @@
         ".vscode-insiders"
         ".config/Code/User"
         ".config/Code - Insiders/User"
+        ".config/xfce4"
+        ".config/Kingsoft"
+        ".config/Thunar"
+
+        #Jetbrains
+        ".config/JetBrains"
+        ".java"
+
+        #Tomcat
+        ".config/tomcat"
 
         # browsers
         ".mozilla"
         ".config/google-chrome"
+
+        # navicat
+        ".config/navicat"
 
         # neovim / remmina / flatpak / ...
         ".local/share"

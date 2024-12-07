@@ -91,7 +91,7 @@ in {
       in {
         home.packages = [emacsPkg];
         services.emacs = {
-          enable = true;
+          enable = false;
           package = emacsPkg;
           client = {
             enable = true;

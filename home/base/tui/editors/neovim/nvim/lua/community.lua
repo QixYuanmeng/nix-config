@@ -56,4 +56,7 @@ return {
   { import = "astrocommunity.motion.nvim-spider" },
   -- AI Assistant
   { import = "astrocommunity.completion.copilot-lua-cmp" },
+
+  -- leetcode
+  { import = "astrocommunity.game.leetcode-nvim" },
 }

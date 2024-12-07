@@ -1,4 +1,11 @@
 {
+  pkgs,
+  pkgs-unstable,
+  nixyDomains,
+  daeuniverse,
+  config,
+  ...
+}:{
   # Network discovery, mDNS
   # With this enabled, you can access your machine at <hostname>.local
   # it's more convenient than using the IP address.
@@ -18,4 +25,27 @@
     "ntp.aliyun.com" # Aliyun NTP Server
     "ntp.tencent.com" # Tencent NTP Server
   ];
+
+
+  # daeuniverse.url = "github:daeuniverse/flake.nix";
+  # add the module to the configuration
+  imports = [
+    daeuniverse.nixosModules.dae
+    daeuniverse.nixosModules.daed
+  ];
+
+  services.daed = {
+
+    enable = true;
+    package = pkgs-unstable.daed;
+    assetsPaths = [
+          "${nixyDomains}/assets"
+          "${pkgs.v2ray-geoip}/share/v2ray/geoip.dat"
+          "${pkgs.v2ray-domain-list-community}/share/v2ray/geosite.dat"
+        ];
+    openFirewall = {
+      enable = true;
+      port = 12345;
+    };
+  };
 }

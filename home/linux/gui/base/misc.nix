@@ -1,7 +1,8 @@
-{
-  pkgs,
-  pkgs-unstable,
-  ...
+{ pkgs
+, pkgs-unstable
+, lib
+, nur-linyinfeng
+, ...
 }: {
   home.packages = with pkgs; [
     # GUI apps
@@ -18,16 +19,30 @@
     freerdp # required by remmina
 
     # misc
-    flameshot
     ventoy # multi-boot usb creator
 
     # my custom hardened packages
-    pkgs.nixpaks.qq
-    pkgs.nixpaks.qq-desktop-item
+    (pkgs.qq.override
+    {
+      # fix fcitx5 input method
+      commandLineArgs = lib.concatStringsSep " " [
+        "--ozone-platform-hint=auto"
+        "--ozone-platform=wayland"
+        "--enable-wayland-ime"
+      ];
+    })
+    #pkgs.nixpaks.qq-desktop-item
 
     #wechat-uos
-     pkgs.nixpaks.wechat-uos
-     pkgs.nixpaks.wechat-uos-desktop-item
+    pkgs.nixpaks.wechat-uos
+    pkgs.nixpaks.wechat-uos-desktop-item
+
+    nur-linyinfeng.packages.${pkgs.system}.wemeet
+
+    feishu
+
+
+    freshrss
   ];
 
   # GitHub CLI tool

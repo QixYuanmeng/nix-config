@@ -60,7 +60,7 @@ in {
             # To decrypt secrets on boot, this key should exists when the system is booting,
             # so we should use the real key file path(prefixed by `/persistent/`) here, instead of the path mounted by impermanence.
             "/persistent/etc/ssh/ssh_host_ed25519_key" # Linux
-            "/home/qix/.ssh/idols-ai"
+            "/home/${myvars.username}/.ssh/idols-ai"
           ]
           else [
             "/etc/ssh/ssh_host_ed25519_key"
@@ -123,7 +123,14 @@ in {
             {
               file = "${mysecrets}/nix-access-tokens.age";
             }
-            // high_security;
+            // user_readable;
+
+
+          "subscrible-nodes" = 
+          {
+            file = "${mysecrets}/subscrible-nodes.age";
+          }
+          // user_readable;
 
 
           # ---------------------------------------------
@@ -165,6 +172,12 @@ in {
           "agenix/qix.age" = {
             source = config.age.secrets."qix.age".path;
             mode = "0000";
+          };
+
+          "agenix/subscrible-nodes" = {
+            source = config.age.secrets."subscrible-nodes".path;
+            mode = "0644";
+            user = myvars.username;
           };
 
           # The following secrets are used by home-manager modules

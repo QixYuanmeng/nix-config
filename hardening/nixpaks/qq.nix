@@ -3,18 +3,17 @@
 #   - https://docs.flatpak.org/en/latest/manifests.html
 #   - https://docs.flatpak.org/en/latest/sandbox-permissions.html
 # - QQ's flatpak manifest: https://github.com/flathub/com.qq.QQ/blob/master/com.qq.QQ.yaml
-{
-  lib,
-  pkgs,
-  mkNixPak,
-  ...
+{ lib
+, pkgs
+, mkNixPak
+, ...
 }:
 mkNixPak {
-  config = {sloth, ...}: {
+  config = { sloth, ... }: {
     app = {
       package = pkgs.qq.override {
         # fix fcitx5 input method
-        commandLineArgs = lib.concatStringsSep " " ["--enable-wayland-ime"];
+        commandLineArgs = lib.concatStringsSep " " [ "--enable-wayland-ime" ];
       };
       binPath = "bin/qq";
     };
@@ -32,6 +31,13 @@ mkNixPak {
       "org.gnome.Shell.Screencast" = "talk";
       "org.freedesktop.Notifications" = "talk";
       "org.kde.StatusNotifierWatcher" = "talk";
+
+      "org.freedesktop.portal.Documents" = "talk";
+      "org.freedesktop.portal.Flatpak" = "talk";
+      "org.freedesktop.portal.FileChooser" = "talk";
+
+      "org.freedesktop.portal.IBus" = "talk";
+      "org.freedesktop.IBus.Portal" = "talk";
     };
     bubblewrap = {
       # To trace all the home files QQ accesses, you can use the following nushell command:
@@ -40,8 +46,12 @@ mkNixPak {
       bind.rw = [
         # given the read write permission to the following directories.
         # NOTE: sloth.mkdir is used to create the directory if it does not exist!
-        (sloth.mkdir (sloth.concat [sloth.xdgConfigHome "/QQ"]))
-        (sloth.mkdir (sloth.concat [sloth.xdgDownloadDir "/QQ"]))
+        [
+          (sloth.mkdir (sloth.concat [ sloth.appDataDir "/QQ" ]))
+          (sloth.concat [ sloth.xdgConfigHome "/QQ" ])
+        ]
+        (sloth.mkdir (sloth.concat [ sloth.xdgDownloadDir "/QQ" ]))
+        "/run/opengl-driver/lib/dri/"
       ];
       sockets = {
         x11 = false;
@@ -50,10 +60,14 @@ mkNixPak {
       };
       bind.dev = [
         "/dev/shm" # Shared Memory
+        "/run/dbus"
       ];
       tmpfs = [
         "/tmp"
       ];
+      env = {
+        IBUS_USE_PORTAL = "1";
+      };
     };
   };
 }

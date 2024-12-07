@@ -1,8 +1,9 @@
+{ pkgs
+, config
+, pkgs-unstable
+, ...
+}:
 {
-  pkgs,
-  config,
-  ...
-}: {
   # If your themes for mouse cursor, icons or windows don’t load correctly,
   # try setting them with home.pointerCursor and gtk.theme,
   # which enable a bunch of compatibility options that should make the themes load in all situations.
@@ -10,7 +11,7 @@
   home.pointerCursor = {
     gtk.enable = true;
     x11.enable = true;
-    package = pkgs.bibata-cursors;
+    package = pkgs-unstable.bibata-cursors;
     name = "Bibata-Modern-Ice";
     size = 24;
   };
@@ -48,7 +49,7 @@
       name = "catppuccin-macchiato-pink-compact";
       package = pkgs.catppuccin-gtk.override {
         # https://github.com/NixOS/nixpkgs/blob/nixos-23.05/pkgs/data/themes/catppuccin-gtk/default.nix
-        accents = ["pink"];
+        accents = [ "pink" ];
         size = "compact";
         variant = "macchiato";
       };

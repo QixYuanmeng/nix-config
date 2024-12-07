@@ -16,7 +16,11 @@ mkNixPak {
     ...
   }: {
     app = {
-      package = pkgs.firefox-wayland;
+      package = (pkgs.firefox-wayland.override {
+      cfg = {
+        enableAdobeFlash = true;
+      };
+    });
       binPath = "bin/firefox";
     };
     flatpak.appId = "org.mozilla.firefox";

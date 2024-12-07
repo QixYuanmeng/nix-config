@@ -1,0 +1,138 @@
+#!/bin/bash
+
+set -Eeuo pipefail
+
+EC=/sys/kernel/debug/ec/ec0/io
+
+function ecw() {
+	# shellcheck disable=SC2059
+	printf "$2" | sudo dd of=$EC bs=1 seek="$1" count=1 conv=notrunc &>/dev/null
+}
+
+function ecr() {
+	sudo dd if=$EC bs=1 skip="$1" count=1 2>/dev/null | xxd -p
+}
+
+function get_fan_mode() {
+	local cpu_fan_mode=$(ecr $((0x22)))
+	local gpu_fan_mode=$(ecr $((0x21)))
+
+	case "$cpu_fan_mode$gpu_fan_mode" in
+		"0404") echo "Auto" ;;
+		"0808") echo "Max" ;;
+		"0c0c") echo "Custom" ;;
+		*) echo "Unknown" ;;
+	esac
+}
+
+function get_fan_speed() {
+	local cpu_fan_speed=$(ecr $((0x37)))
+	local gpu_fan_speed=$(ecr $((0x3a)))
+
+	echo "CPU: $((0x$cpu_fan_speed))%, GPU: $((0x$gpu_fan_speed))%"
+}
+
+function get_cpu_performance_mode() {
+	local power_mode=$(ecr $((0x2c)))
+
+	case "$power_mode" in
+		"00") echo "Quiet" ;;
+		"01") echo "Default" ;;
+		"04") echo "Performance" ;;
+		*) echo "Unknown" ;;
+	esac
+}
+
+# get PL
+function get_power_limits() {
+    MSR=/sys/devices/virtual/powercap/intel-rapl/intel-rapl:0
+    MCH=/sys/devices/virtual/powercap/intel-rapl-mmio/intel-rapl-mmio:0
+    for N in "$MSR" "$MCH"; do
+        [[ "$N" == "$MSR" ]] && NODE=MSR || NODE=MCH
+        echo "[$NODE] PL1 [$(cat "$N/constraint_0_power_limit_uw") $(cat "$N/constraint_0_time_window_us")] PL2 [$(cat "$N/constraint_1_power_limit_uw") $(cat "$N/constraint_1_time_window_us")]"
+    done
+}
+
+function set_power_limits() {
+	echo "$3" | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+	cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+	MSR=/sys/devices/virtual/powercap/intel-rapl/intel-rapl:0
+	MCH=/sys/devices/virtual/powercap/intel-rapl-mmio/intel-rapl-mmio:0
+	for N in "$MSR" "$MCH"; do
+		echo "${1}000000" | sudo tee "$N/constraint_0_power_limit_uw" &>/dev/null
+		echo "${2}000000" | sudo tee "$N/constraint_1_power_limit_uw" &>/dev/null
+		echo "128000000"  | sudo tee "$N/constraint_0_time_window_us" &>/dev/null
+		echo "128000000"  | sudo tee "$N/constraint_1_time_window_us" &>/dev/null
+		[[ "$N" == "$MSR" ]] && NODE=MSR || NODE=MCH
+		echo "[$NODE] PL1 [$(cat "$N/constraint_0_power_limit_uw") $(cat "$N/constraint_0_time_window_us")] PL2 [$(cat "$N/constraint_1_power_limit_uw") $(cat "$N/constraint_1_time_window_us")]"
+	done
+}
+
+ecw $((0x03)) '\x11' # Write-Enable
+
+if [[ $(sudo ls $EC 2>/dev/null) ]]; then
+	if [[ $* =~ "q" ]]; then
+		echo "PWR - Quiet"
+		ecw $((0x2c)) '\x00' # 00 01 04 PWR: quiet default perf
+		ecw $((0x2d)) '\x04' # 04 05 PWR
+		set_power_limits 10 10 "powersave"
+		echo powersupersave | sudo tee /sys/module/pcie_aspm/parameters/policy
+		echo power | sudo tee /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference
+	fi
+	if [[ $* =~ "d" ]]; then
+		echo "PWR - Default"
+		ecw $((0xab)) '\x0a' # 08 0a SDTM (Shutdown Therm Temp) temp=val*10, default 80*c
+		ecw $((0x2c)) '\x01' # 00 01 04 PWR: quiet default perf
+		ecw $((0x2d)) '\x04' # 04 05 PWR
+		set_power_limits 75 75 "performance"
+		echo performance | sudo tee /sys/module/pcie_aspm/parameters/policy
+		echo performance | sudo tee /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference
+	fi
+	if [[ $* =~ "p" ]]; then
+		echo "PWR - Performance"
+		ecw $((0xab)) '\x0a' # 08 0a SDTM (Shutdown Therm Temp) temp=val*10, default 80*c
+		ecw $((0x2c)) '\x04' # 00 01 04 PWR: quiet default perf
+		ecw $((0x2d)) '\x04' # 04 05 PWR
+		set_power_limits 95 95 "performance"
+		echo performance | sudo tee /sys/module/pcie_aspm/parameters/policy
+		echo performance | sudo tee /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference
+	fi
+	if [[ $* =~ "a" ]]; then
+		echo "FAN - Auto"
+		ecw $((0x21)) '\x10' # 10 20 30 GPUF: auto max cust
+		ecw $((0x22)) '\x04' # 04 08 0c CPUF: auto max cust
+	fi
+	if [[ $* =~ "c" ]]; then
+		if [ -z "$2" ]; then
+			echo "Specify FAN Percentage as Second Arg"
+		else
+			PCT="\x$(printf %x "$2")"
+			echo "FAN - Custom ($2%)"
+			ecw $((0x21)) '\x30' # 10 20 30 GPUF: auto max cust
+			ecw $((0x22)) '\x0c' # 04 08 0c CPUF: auto max cust
+			ecw $((0x37)) "$PCT" # 32 64 CPUF PCT: 0-100%
+			ecw $((0x3a)) "$PCT" # 32 64 GPUF PCT: 0-100%
+		fi
+	fi
+	if [[ $* =~ "m" ]]; then
+		echo "FAN - Max"
+		ecw $((0x21)) '\x20' # 10 20 30 GPUF: auto max cust
+		ecw $((0x22)) '\x08' # 04 08 0c CPUF: auto max cust
+	fi
+    # set PL
+    if [[ $* =~ "pl" ]]; then
+        if [ -z "$2" ]; then
+            echo "Specify PL1 and PL2 as Second and Third Args"
+        else
+            PL1="\x$(printf %x "$2")"
+            PL2="\x$(printf %x "$3")"
+            echo "PL1: $2W, PL2: $3W"
+            set_power_limits "$2" "$3" "performance"
+        fi
+    fi
+else
+	echo "EC interface not enabled"
+fi
+
+# Return current fan mode, speed, and CPU performance mode as JSON
+echo "{\"mode\": \"$(get_fan_mode)\", \"speed\": \"$(get_fan_speed)\", \"cpu_mode\": \"$(get_cpu_performance_mode)\", \"power_limits\": \"$(get_power_limits)\"}"

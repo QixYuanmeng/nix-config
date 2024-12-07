@@ -1,12 +1,12 @@
-{
-  pkgs,
-  pkgs-unstable,
-  ...
+{ pkgs
+, pkgs-unstable
+, ...
 }: {
   nixpkgs.config = {
     programs.npm.npmrc = ''
       prefix = ''${HOME}/.npm-global
     '';
+    firefox.enableAdobeFlash = true; # for Firefox
   };
 
   home.packages = with pkgs; (
@@ -44,6 +44,8 @@
 
       #-- sql
       sqlfluff
+
+      ruffle
 
       #-- protocol buffer
       buf # linting and formatting
@@ -97,11 +99,22 @@
 
       #-- rust
       # we'd better use the rust-overlays for rust development
-      pkgs-unstable.rustc
-      pkgs-unstable.rust-analyzer
-      pkgs-unstable.cargo # rust package manager
-      pkgs-unstable.rustfmt
-      pkgs-unstable.clippy # rust linter
+      # pkgs-unstable.rustc
+      # pkgs-unstable.rust-analyzer
+      # pkgs-unstable.cargo # rust package manager
+      # pkgs-unstable.rustfmt
+      # pkgs-unstable.clippy # rust linter
+      (pkgs-unstable.fenix.complete.withComponents [
+        "cargo"
+        "clippy"
+        "rust-src"
+        "rustc"
+        "rustfmt"
+        "llvm-tools-preview"
+      ])
+      pkgs-unstable.rust-analyzer-nightly
+      alsa-lib
+
 
       #-- golang
       go
@@ -162,7 +175,7 @@
       nodePackages.prettier # common code formatter
       fzf
       gdu # disk usage analyzer, required by AstroNvim
-      (ripgrep.override {withPCRE2 = true;}) # recursively searches directories for a regex pattern
+      (ripgrep.override { withPCRE2 = true; }) # recursively searches directories for a regex pattern
     ]
   );
 }

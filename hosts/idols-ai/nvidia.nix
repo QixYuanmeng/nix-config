@@ -1,4 +1,4 @@
-{pkgs-unstable, ...}: {
+{pkgs-unstable, nur-qixyuanmeng, pkgs, ...}: {
   # ===============================================================================================
   # for Nvidia GPU
   # ===============================================================================================
@@ -12,6 +12,7 @@
     "modprobe.blacklist=nouveau"
   ];
   services.xserver.videoDrivers = ["nvidia"]; # will install nvidia-vaapi-driver by default
+  services.thermald.enable = true;
   hardware.nvidia = {
     open = false;
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
@@ -22,6 +23,7 @@
     modesetting.enable = false;
     powerManagement.enable = true;
     powerManagement.finegrained = true;
+    nvidiaPersistenced = true;
   };
 
 	hardware.nvidia.prime = {
@@ -51,6 +53,7 @@
         cudaSupport = true;
         waylandSupport = true;
       };
+      myRepo = nur-qixyuanmeng.packages."${pkgs.system}";
 
       # ffmpeg-full = super.ffmpeg-full.override {
       #   withNvcodec = true;

@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   # FHS environment, flatpak, appImage, etc.
   environment.systemPackages = [
     # create a fhs environment by command `fhs`, so we can run non-nixos packages in nixos!
@@ -6,14 +6,30 @@
       let
         base = pkgs.appimageTools.defaultFhsEnvArgs;
       in
-        pkgs.buildFHSUserEnv (base
-          // {
-            name = "fhs";
-            targetPkgs = pkgs: (base.targetPkgs pkgs) ++ [pkgs.pkg-config];
-            profile = "export FHS=1";
-            runScript = "bash";
-            extraOutputsToInstall = ["dev"];
-          })
+      pkgs.buildFHSUserEnv (base
+        // {
+        name = "fhs";
+        targetPkgs = pkgs: (base.targetPkgs pkgs) ++ [ pkgs.pkg-config ];
+        profile = "export FHS=1";
+        runScript = "bash";
+        extraOutputsToInstall = [ "dev" ];
+      })
+    )
+    (
+      let
+        envname = "pio";
+        mypython = pkgs.python311.withPackages (ps: with ps; [ pkgs.platformio ]);
+      in
+      (pkgs.buildFHSUserEnv {
+        name = envname;
+        targetPkgs = pkgs: (with pkgs; [
+          platformio-core
+          mypython
+          openocd
+        ]);
+        # NixOS/nixpkgs#263201, NixOS/nixpkgs#262775, NixOS/nixpkgs#262080
+        runScript = "env LD_LIBRARY_PATH= bash";
+      })
     )
   ];
 

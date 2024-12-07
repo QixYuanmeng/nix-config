@@ -85,6 +85,9 @@
 
     nix-gaming.url = "github:fufexan/nix-gaming";
 
+    nixyDomains.url = "github:oluceps/nixyDomains";
+    nixyDomains.flake = false;
+
     disko = {
       url = "github:nix-community/disko/v1.6.1";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -116,6 +119,11 @@
       flake = false;
     };
 
+     fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     polybar-themes = {
       url = "github:adi1090x/polybar-themes";
       flake = false;
@@ -132,13 +140,27 @@
 
     # my wallpapers
     wallpapers = {
-      url = "github:ryan4yin/wallpapers";
+      url = "git+ssh://git@github.com/qixyuanmeng/wallpapers";
       flake = false;
     };
 
+    #fan control
+    nbfc-linux = {
+      url = "github:nbfc-linux/nbfc-linux";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    auto-cpufreq = {
+            url = "github:AdnanHodzic/auto-cpufreq";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+
+    daeuniverse.url = "github:daeuniverse/flake.nix";
+
     nur-ryan4yin.url = "github:ryan4yin/nur-packages";
     nur-ataraxiasjel.url = "github:AtaraxiaSjel/nur";
-
+    nur-qixyuanmeng.url = "github:QixYuanmeng/nur-packages";
+    nur-linyinfeng.url = "github:linyinfeng/nur-packages";
     chinese-fonts-overlay.url = "github:brsvh/chinese-fonts-overlay";
+
   };
 }

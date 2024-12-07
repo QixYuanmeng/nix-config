@@ -19,7 +19,7 @@ in {
   nixpkgs.overlays = [
     (_: super: {
       nixpaks = {
-        qq = wrapper super ./qq.nix;
+        #qq = wrapper super ./qq.nix;
         qq-desktop-item = super.callPackage ./qq-desktop-item.nix {};
 
         wechat-uos = wrapper super ./wechat-uos.nix;
