@@ -10,7 +10,6 @@
 , zlib
 , wayland
 , curl
-
 , systemdLibs
 , fontconfig
 , xkeyboard_config

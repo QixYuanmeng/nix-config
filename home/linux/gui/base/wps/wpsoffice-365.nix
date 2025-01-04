@@ -1,40 +1,40 @@
-{ lib
-, stdenv
-, dpkg
-, autoPatchelfHook
-, alsa-lib
-, at-spi2-core
-, libtool
-, libxkbcommon
-, nspr
-, mesa
-, libtiff
-, udev
-, gtk3
-, libsForQt5
-, xorg
-, cups
-, pango
-, libjpeg
-, gtk2
-, gdk-pixbuf
-, libpulseaudio
-, libbsd
-, libusb1
-, libmysqlclient
-, llvmPackages
-, dbus
-, gcc-unwrapped
-, freetype
-, curl
-, makeWrapper
-, runCommandLocal
-, cacert
-, coreutils
-, fetchurl
-, useChineseVersion ? false
-, use365Version ? false
-,
+{
+  lib,
+  stdenv,
+  dpkg,
+  autoPatchelfHook,
+  alsa-lib,
+  at-spi2-core,
+  libtool,
+  libxkbcommon,
+  nspr,
+  mesa,
+  libtiff,
+  udev,
+  gtk3,
+  libsForQt5,
+  xorg,
+  cups,
+  pango,
+  libjpeg,
+  gtk2,
+  gdk-pixbuf,
+  libpulseaudio,
+  libbsd,
+  libusb1,
+  libmysqlclient,
+  llvmPackages,
+  dbus,
+  gcc-unwrapped,
+  freetype,
+  curl,
+  makeWrapper,
+  runCommandLocal,
+  cacert,
+  coreutils,
+  fetchurl,
+  useChineseVersion ? false,
+  use365Version ? false,
 }:
 let
   sources = import ./sources.nix;
@@ -68,7 +68,8 @@ stdenv.mkDerivation rec {
             url = sources.pro_arm64_url;
             hash = sources.pro_arm64_hash;
           };
-        }.${stdenv.system} or (throw "wpsoffice-365-${version}: ${stdenv.system} is unsupported.")
+        }
+        .${stdenv.system} or (throw "wpsoffice-365-${version}: ${stdenv.system} is unsupported.")
       )
     else if (stdenv.system == "x86_64-linux") then
       runCommandLocal
@@ -173,19 +174,16 @@ stdenv.mkDerivation rec {
     for i in wps wpp et wpspdf; do
       substituteInPlace $out/bin/$i \
         --replace /opt/kingsoft/wps-office $prefix
-      wrapProgram $out/bin/$i \
-        --set LANG "zh_CN.UTF-8"
     done
     for i in $out/share/applications/*;do
       substituteInPlace $i \
-        --replace /usr/bin $out/bin 
+        --replace /usr/bin $out/bin
     done
     # need system freetype and gcc lib to run properly
     for i in wps wpp et wpspdf wpsoffice; do
       wrapProgram $out/opt/kingsoft/wps-office/office6/$i \
         --set LD_PRELOAD "${freetype}/lib/libfreetype.so" \
-        --set LD_LIBRARY_PATH "${lib.makeLibraryPath [ gcc-unwrapped.lib ]}" \
-        --set LANG "zh_CN.UTF-8"
+        --set LD_LIBRARY_PATH "${lib.makeLibraryPath [ gcc-unwrapped.lib ]}"
     done
     runHook postInstall
   '';

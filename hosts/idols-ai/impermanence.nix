@@ -119,6 +119,9 @@
         ".config/Kingsoft"
         ".config/Thunar"
 
+        #zed
+        ".config/zed"
+
         #Jetbrains
         ".config/JetBrains"
         ".java"

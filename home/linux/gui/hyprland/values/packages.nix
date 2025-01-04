@@ -1,7 +1,6 @@
-{
-  pkgs,
-  pkgs-unstable,
-  ...
+{ pkgs
+, pkgs-unstable
+, ...
 }: {
   home.packages = with pkgs; [
     waybar # the status bar
@@ -16,6 +15,8 @@
     cliphist
     wofi
     grimblast
+    wlr-randr
+
 
     pkgs-unstable.hyprshot # screen shot
     grim # taking screenshots
@@ -32,6 +33,12 @@
     mpc-cli # command-line mpd client
     ncmpcpp # a mpd client with a UI
     networkmanagerapplet # provide GUI app: nm-connection-editor
-    microsoft-edge
+    (microsoft-edge.overrideAttrs (oldAttrs: {
+      commandLineArgs = [
+        "--ozone-platform-hint=auto"
+        "--ozone-platform=wayland"
+        "--enable-wayland-ime"
+      ];
+    }))
   ];
 }

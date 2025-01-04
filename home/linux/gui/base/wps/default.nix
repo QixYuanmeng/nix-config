@@ -11,14 +11,14 @@ let
 
   my-wpsoffice-365 = (pkgs.callPackage ./wpsoffice-365.nix {
     use365Version = true;
-    useChineseVersion = false;
+    useChineseVersion = true;
   });
 in
 # processing audio/video
 {
   home.packages = with pkgs; [
-    my-wpsoffice-cn
+    # my-wpsoffice-cn
     libwps
-    # my-wpsoffice-365
+    my-wpsoffice-365
   ];
 }

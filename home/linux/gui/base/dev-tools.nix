@@ -12,5 +12,6 @@ in {
     ciscoPacketTracer8Sign
     zed-editor
     zbar
+    jetbrains.pycharm-professional
   ];
 }

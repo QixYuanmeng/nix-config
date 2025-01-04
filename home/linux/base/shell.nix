@@ -25,8 +25,8 @@ in rec {
 
     # set default applications
     BROWSER = "microsoft-edge";
-    TERM = "foot";
-    TERMINAL = "foot";
+    TERM = "alacritty";
+    TERMINAL = "alacritty";
 
     # enable scrolling in git diff
     DELTA_PAGER = "less -R";

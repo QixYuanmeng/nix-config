@@ -4,7 +4,9 @@
   ...
 }:
 let
-  wemeet-bin-bwrap = pkgs.callPackage ./wemeet-bin-bwrap.nix {};
+  wemeet-bin-bwrap = pkgs.libsForQt5.callPackage ./wemeet-bin-bwrap.nix {
+    useWaylandScreenshare = true;
+  };
 in
 # processing audio/video
 {

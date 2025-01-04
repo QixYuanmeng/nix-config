@@ -1,4 +1,3 @@
-
 #! /usr/bin/env nix-shell
 #! nix-shell -i bash --pure --keep GITHUB_TOKEN -p nix curl cacert nix-prefetch-git jq
 
