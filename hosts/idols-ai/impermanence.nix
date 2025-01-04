@@ -129,9 +129,13 @@
         # browsers
         ".mozilla"
         ".config/google-chrome"
-
+        ".config/microsoft-edge"
+        ".jrebel"
         # navicat
         ".config/navicat"
+
+        # obsidian
+        ".config/obsidian"
 
         # neovim / remmina / flatpak / ...
         ".local/share"

@@ -1,15 +1,17 @@
-{pkgs-unstable, nur-qixyuanmeng, pkgs, ...}: {
+{pkgs-unstable, nur-qixyuanmeng, pkgs, config, ...}: {
   # ===============================================================================================
   # for Nvidia GPU
   # ===============================================================================================
 
   # https://wiki.hyprland.org/Nvidia/
   boot.kernelParams = [
-    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
     # Since NVIDIA does not load kernel mode setting by default,
     # enabling it is required to make Wayland compositors function properly.
-    "nvidia-drm.fbdev=1"
     "modprobe.blacklist=nouveau"
+    "ec_sys.write_support=1"
+    "msr.allow_writes=on"
+    #"nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+    #"nvidia-drm.fbdev=1"
   ];
   services.xserver.videoDrivers = ["nvidia"]; # will install nvidia-vaapi-driver by default
   services.thermald.enable = true;
@@ -18,7 +20,7 @@
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/default.nix
     # package = config.boot.kernelPackages.nvidiaPackages.stable;
-
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
     # required by most wayland compositors!
     modesetting.enable = false;
     powerManagement.enable = true;
@@ -27,6 +29,7 @@
   };
 
 	hardware.nvidia.prime = {
+    sync.enable = false;
 		offload = {
 			enable = true;
 			enableOffloadCmd = true;

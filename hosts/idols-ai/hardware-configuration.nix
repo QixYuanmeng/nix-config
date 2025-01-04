@@ -16,7 +16,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   # depending on how you configured your disk mounts, change this to /boot or /boot/efi.
   boot.loader.efi.efiSysMountPoint = "/boot";
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = false;
 
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;

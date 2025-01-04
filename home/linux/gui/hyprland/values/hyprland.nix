@@ -1,11 +1,23 @@
+{ pkgs
+, lib
+, nur-ryan4yin
+, hyprland
+, ...
+}:
+let
+  # package = (pkgs.hyprland.overrideAttrs (oldAttrs: {
+  #   buildInputs = oldAttrs.buildInputs ++ [ pkgs.hyprgraphics ];
+  #   src = pkgs.fetchFromGitHub {
+  #     owner = "hyprwm";
+  #     repo = "hyprland";
+  #     fetchSubmodules = true;
+  #     rev = "de3ad245dcbcd42c88e9afc48264bdb8f2356c15";
+  #     sha256 = "sha256-Px7iwYO1iUxgDM7GreZRWhFCgD65MoNhQp+nYnhWGM4=";
+  #   };
+  # }));
+  package = hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+in
 {
-  pkgs,
-  lib,
-  nur-ryan4yin,
-  ...
-}: let
-  package = pkgs.hyprland;
-in {
   # NOTE:
   # We have to enable hyprland/i3's systemd user service in home-manager,
   # so that gammastep/wallpaper-switcher's user service can be start correctly!
@@ -34,7 +46,7 @@ in {
     # gammastep/wallpaper-switcher need this to be enabled.
     systemd = {
       enable = true;
-      variables = ["--all"];
+      variables = [ "--all" ];
     };
   };
 

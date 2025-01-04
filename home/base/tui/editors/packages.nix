@@ -113,8 +113,7 @@
         "llvm-tools-preview"
       ])
       pkgs-unstable.rust-analyzer-nightly
-      alsa-lib
-
+      alsa-lib.out
 
       #-- golang
       go
@@ -141,14 +140,18 @@
 
       #-- bash
       nodePackages.bash-language-server
+      vue-language-server
+      typescript-language-server
+      typescript
       shellcheck
       shfmt
     ]
     #-*- Web Development -*-#
     ++ [
+      nodePackages.yarn
       nodePackages.nodejs
-      nodePackages.typescript
-      nodePackages.typescript-language-server
+      typescript
+      typescript-language-server
       # HTML/CSS/JSON/ESLint language servers extracted from vscode
       nodePackages.vscode-langservers-extracted
       nodePackages."@tailwindcss/language-server"

@@ -18,8 +18,7 @@
     #osdlyrics
     waylyrics
     qcm
-
-    # video/audio tools
+       # video/audio tools
    # cava # for visualizing audio
     libva-utils
     vdpauinfo

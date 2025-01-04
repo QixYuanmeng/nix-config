@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   #============================= Audio(PipeWire) =======================
 
   # List packages installed in system profile. To search, run:
@@ -66,8 +66,13 @@
       keyboards.default.settings = {
         main = {
           # overloads the capslock key to function as both escape (when tapped) and control (when held)
-          capslock = "overload(control, esc)";
-          esc = "capslock";
+          #capslock = "overload(control, esc)";
+          #esc = "capslock";
+          shift = "oneshot(shift)";
+          #meta = "oneshot(meta)";
+          control = "oneshot(control)";
+          leftalt = "oneshot(alt)";
+          rightalt = "oneshot(altgr)";
         };
       };
     };

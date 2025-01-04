@@ -16,6 +16,7 @@ in rec {
     LESSKEY = c + "/less/lesskey";
     WINEPREFIX = d + "/wine";
     GTK_IM_MODULE = "fcitx";
+    LANG = "zh_CN.UTF-8";
 
     # set this variable make i3 failed to start
     # related issue:
@@ -23,7 +24,9 @@ in rec {
     # XAUTHORITY = "$XDG_RUNTIME_DIR/Xauthority";
 
     # set default applications
-    BROWSER = "google-chrome-stable";
+    BROWSER = "microsoft-edge";
+    TERM = "foot";
+    TERMINAL = "foot";
 
     # enable scrolling in git diff
     DELTA_PAGER = "less -R";

@@ -16,7 +16,7 @@ in {
       "LIBVA_DRIVER_NAME,nvidia"
       "XDG_SESSION_TYPE,wayland"
       "GBM_BACKEND,nvidia-drm"
-      "AQ_DRM_DEVICES,/dev/dri/card1"
+      #"AQ_DRM_DEVICES,/dev/dri/pci-0000:01:00.0-card"
       "__GLX_VENDOR_LIBRARY_NAME,nvidia"
       # fix https://github.com/hyprwm/Hyprland/issues/1520
       "WLR_NO_HARDWARE_CURSORS,1"

@@ -7,7 +7,8 @@ in {
     mitmproxy # http/https proxy tool
     insomnia # REST client
     wireshark # network analyzer
-
+    dbeaver-bin
+    postman
     # IDEs
     #jetbrains.idea-community
     #jetbrains.pycharm-professional

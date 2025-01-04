@@ -10,5 +10,7 @@ in {
   home.packages = with pkgs; [
     android-tools
     ciscoPacketTracer8Sign
+    zed-editor
+    zbar
   ];
 }

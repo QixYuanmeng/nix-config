@@ -25,4 +25,8 @@
     enable = true;
     package = pkgs-unstable.mysql84;
   };
+  services.redis = {
+    enable = true;
+    package = pkgs-unstable.redis;
+  };
 }

@@ -69,6 +69,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hyprland = {
+      url = "github:hyprwm/hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # generate iso/qcow2/docker/... image from nixos configuration
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
@@ -149,10 +154,6 @@
       url = "github:nbfc-linux/nbfc-linux";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    auto-cpufreq = {
-            url = "github:AdnanHodzic/auto-cpufreq";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
 
     daeuniverse.url = "github:daeuniverse/flake.nix";
 

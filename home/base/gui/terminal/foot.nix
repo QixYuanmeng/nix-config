@@ -5,7 +5,7 @@
     # https://man.archlinux.org/man/foot.ini.5
     settings = {
       main = {
-        term = "foot"; # or "xterm-256color" for maximum compatibility
+        term = "xterm-256color"; # or "xterm-256color" for maximum compatibility
         font = "JetBrainsMono Nerd Font:size=10";
         dpi-aware = "yes";
 

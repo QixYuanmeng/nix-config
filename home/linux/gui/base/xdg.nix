@@ -32,9 +32,17 @@
       enable = true;
       # let `xdg-open` to open the url with the correct application.
       defaultApplications = let
-        browser = ["google-chrome-stable.desktop"];
+        browser = ["microsoft-edge.desktop"];
         editor = ["nvim.desktop" "Helix.desktop" "code.desktop"];
       in {
+
+        # terminl
+        "text/x-shellscript" = editor;
+        "text/x-python" = editor;
+
+        "inode/directory" = ["thunar.desktop"];
+        "inode/terminal" = ["foot.desktop"];
+
         "application/json" = browser;
         "application/pdf" = browser; # TODO: pdf viewer
 

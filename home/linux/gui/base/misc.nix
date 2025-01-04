@@ -35,14 +35,13 @@
 
     #wechat-uos
     pkgs.nixpaks.wechat-uos
-    pkgs.nixpaks.wechat-uos-desktop-item
+    #pkgs.nixpaks.wechat-uos-desktop-item
 
-    nur-linyinfeng.packages.${pkgs.system}.wemeet
+    # nur-linyinfeng.packages.${pkgs.system}.wemeet
 
     feishu
 
-
-    freshrss
+    rustdesk
   ];
 
   # GitHub CLI tool

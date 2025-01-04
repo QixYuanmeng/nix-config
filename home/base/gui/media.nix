@@ -14,6 +14,9 @@
     graphviz
 
     xarchiver
+    pcmanfm-qt
+    # archive manager
+    lxqt.lxqt-archiver
 
     (obsidian.override {
       commandLineArgs = [
